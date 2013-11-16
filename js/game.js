@@ -2,9 +2,19 @@ function Game() {
   this.pads = { };
 }
 
+var gamePadMaster = null;
+
 Game.prototype.init = function() {
   teams.init();
   this.loop();
+
+  var i = 10;
+  while(i--) {
+    var player = new Player();
+    player.x = Math.random() * 500 - 250;
+    player.y = Math.random() * 500 - 250;
+    players.push(player);
+  }
 }
 
 Game.prototype.loop = function() {
@@ -21,6 +31,10 @@ Game.prototype.loop = function() {
 
         this.pads[pads[i].name] = player;
         console.log('new player');
+
+        if (! gamePadMaster && i == 0) {
+          gamePadMaster = pads[i];
+        }
       }
     }
   }
@@ -32,7 +46,7 @@ Game.prototype.loop = function() {
 
   world.phys();
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  camera.render();
 
   world.render();
   players.render();

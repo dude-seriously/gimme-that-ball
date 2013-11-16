@@ -2,6 +2,7 @@ body {
   margin: 0;
   background: #323232;
   color: #fff;
+  font-family: Helvetica, sans-serif;
   overflow: hidden;
 }
 
@@ -19,4 +20,74 @@ body {
 
 #game {
 
+}
+
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  background: #323232;
+  border-radius: 4px;
+
+  -moz-box-shadow:    0 0 16px rgba(0, 0, 0, .3);
+  -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, .3);
+  box-shadow:         0 0 16px rgba(0, 0, 0, .3);
+
+  border: 1px solid #222;
+}
+
+#lobby {
+  @width: 512px;
+  @height: 512px;
+  width: @width;
+  height: @height;
+  margin: -(@width/2) 0 0 -(@height/2);
+
+  > h1 {
+    font-weight: 100;
+    text-align: center;
+    margin: 8px 0;
+  }
+  > h2 {
+    font-weight: 100;
+    text-align: center;
+    margin: 8px 0 32px;
+  }
+
+  > .lobby {
+    float: left;
+    width: 64px;
+    text-align: center;
+  }
+
+  > .teams {
+    float: left;
+    width: @width / 2 - 32px;
+
+    &.team-a {
+      text-align: left;
+      > .player > .number {
+        float: left;
+      }
+    }
+    &.team-b {
+      text-align: right;
+      > .player > .number {
+        float: right;
+      }
+    }
+    > .player {
+      height: 48px;
+      line-height: 48px;
+      background: #222;
+      padding: 0;
+
+      > .number {
+        font-size: 18px;
+        padding: 0 8px;
+      }
+    }
+  }
 }
