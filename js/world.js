@@ -1,4 +1,5 @@
 function World() {
+  this.border = 32;
   this.left = -1024;
   this.right = 1024;
   this.top = -512;
@@ -10,19 +11,19 @@ function World() {
 
   var b2d = new b2AABB();
   b2d.minVertex.Set(this.left, this.top);
-  b2d.maxVertex.Set(this.right, this.bottom + 32);
+  b2d.maxVertex.Set(this.right, this.bottom + this.border);
 
   var gravity = new b2Vec2(0, 600);
   this.phys = new b2World(b2d, gravity, true);
 
+  // bottom
   var groundSd = new b2BoxDef();
-  groundSd.extents.Set(this.right - this.left, 32); // Size of ground
+  groundSd.extents.Set(this.right - this.left, this.border); // Size of ground
   groundSd.restitution = 0.2;
-
   var groundBd = new b2BodyDef();
   groundBd.AddShape(groundSd);
-  groundBd.position.Set(0, this.bottom + 32); // Position
-  this.ground = this.phys.CreateBody(groundBd);
+  groundBd.position.Set(0, this.bottom + this.border); // Position
+  this.phys.CreateBody(groundBd);
 }
 
 World.prototype.addProp = function(opt) {
@@ -43,7 +44,6 @@ World.prototype.update = function() {
 }
 
 World.prototype.render = function() {
-
   ctx.beginPath();
   ctx.moveTo(this.left, this.top);
   ctx.lineTo(this.right, this.top);

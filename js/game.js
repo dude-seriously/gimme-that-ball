@@ -57,6 +57,8 @@ Game.prototype.loop = function() {
 
   world.updatePhys();
 
+  camera.update();
+
   camera.render();
 
   world.render();

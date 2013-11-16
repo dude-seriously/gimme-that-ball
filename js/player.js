@@ -128,6 +128,9 @@ Player.prototype.render = function() {
     var pos = this.phys.GetOriginPosition();
     var rot = this.phys.GetRotation();
 
+    this.x = pos.x;
+    this.y = pos.y;
+
     ctx.translate(pos.x, pos.y);
     ctx.rotate(rot);
     ctx.drawImage(playerImage, -(playerWidth/2), -(playerHeight/2));
