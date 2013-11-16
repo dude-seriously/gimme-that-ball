@@ -23,7 +23,7 @@ Game.prototype.init = function() {
   var i = 20;
   while(i--) {
     if (i == 17) {
-      world.addProp(propTypes['big seesaw']);
+      world.addProp(propTypes['boomerang']);
     } else if (i%3 == 0) {
       var type = propTypes['platform'];
       type.x =  Math.random() * world.width + world.left;
