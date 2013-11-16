@@ -12,7 +12,7 @@ function World() {
   b2d.minVertex.Set(this.left, this.top);
   b2d.maxVertex.Set(this.right, this.bottom + 32);
 
-  var gravity = new b2Vec2(0, 300);
+  var gravity = new b2Vec2(0, 600);
   this.phys = new b2World(b2d, gravity, true);
 
   var groundSd = new b2BoxDef();

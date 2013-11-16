@@ -2,7 +2,7 @@ body{margin:0;background:#323232;color:#fff;font-family:Helvetica,sans-serif;ove
 #ruler{position:absolute;top:0;right:0;bottom:0;left:0;width:auto;height:auto;opacity:0;visibility:hidden}
 #overlay{position:fixed;top:0;right:0;bottom:0;left:0;width:auto;height:auto;background:rgba(0,0,0,0.8);visibility:hidden;opacity:0;-webkit-transition:visibility 200ms,opacity 200ms;-moz-transition:visibility 200ms,opacity 200ms;-o-transition:visibility 200ms,opacity 200ms;transition:visibility 200ms,opacity 200ms}#overlay.active{visibility:visible;opacity:1}
 .modal{position:fixed;top:50%;left:50%;background:#323232;border-radius:4px;-moz-box-shadow:0 0 16px #000;-webkit-box-shadow:0 0 16px #000;box-shadow:0 0 16px #000;-webkit-transition:visibility 200ms,opacity 200ms;-moz-transition:visibility 200ms,opacity 200ms;-o-transition:visibility 200ms,opacity 200ms;transition:visibility 200ms,opacity 200ms;border:1px solid #222;visibility:hidden;opacity:0}.modal.active{visibility:visible;opacity:1}
-#lobby{width:512px;height:370px;margin:-185px 0 0 -256px}#lobby>h1{font-weight:100;text-align:center;margin:8px 0;color:#f60}
+#lobby{display:none;width:512px;height:370px;margin:-185px 0 0 -256px}#lobby>h1{font-weight:100;text-align:center;margin:8px 0;color:#f60}
 #lobby>h2{font-weight:100;text-align:center;margin:18px 0 22px}
 #lobby>.side{position:absolute;bottom:0;font-size:48px;opacity:.2}#lobby>.side.side-left{left:190px}
 #lobby>.side.side-right{right:190px}
