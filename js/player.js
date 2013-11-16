@@ -5,6 +5,10 @@ var playerImage = new Image();
 var playerImageJump = new Image();
 playerImage.src = "./img/player.png";
 playerImageJump.src = "./img/player_jump.png";
+var playerBImage = new Image();
+var playerBImageJump = new Image();
+playerBImage.src = "./img/playerb.png";
+playerBImageJump.src = "./img/playerb_jump.png";
 
 var playerHeight = 60;
 var playerWidth = 36;
@@ -22,6 +26,8 @@ function Player(ind) {
   this.ready = false;
   this.jumping = false;
   this.dashing = false;
+
+  this.last_dash = 0;
 
   this.x = 0;
   this.y = 0;
@@ -123,10 +129,11 @@ Player.prototype.update = function() {
 
         // DASH
 
-        if (ball.player != this) {
+        if (ball.player != this && ((new Date()).valueOf() - this.last_dash > 1000)) {
 
           if (gamePadMaster.leftShoulder0) {
             if (this.dashing == false) {
+              this.last_dash = (new Date()).valueOf();
               this.dashing = true;
               // var vel = this.phys.GetLinearVelocity();
               // vel.x = -5;
@@ -135,6 +142,7 @@ Player.prototype.update = function() {
             }
           } else if (gamePadMaster.rightShoulder0) {
             if (this.dashing == false) {
+              this.last_dash = (new Date()).valueOf();
               this.dashing = true;
               // var vel = this.phys.GetLinearVelocity();
               // vel.x = 5;
@@ -171,14 +179,14 @@ Player.prototype.render = function() {
 
     ctx.translate(pos.x / pf, pos.y / pf);
     ctx.rotate(rot);
-    var img = (this.jumping) ? playerImageJump : playerImage;
-    ctx.drawImage(img, -(playerWidth/2), -(playerHeight/2));
 
-    // if (this.team.id == 1) {
-    //   ctx.fillStyle = '#06f';
-    // } else {
-    //   ctx.fillStyle = '#f60';
-    // }
+    if (this.team.id == 1) {
+      var img = (this.jumping) ? playerImageJump : playerImage;
+    } else {
+      var img = (this.jumping) ? playerBImageJump : playerBImage;
+    }
+
+    ctx.drawImage(img, -(playerWidth/2), -(playerHeight/2));
 
     ctx.restore();
   }
