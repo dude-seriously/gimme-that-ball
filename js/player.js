@@ -21,20 +21,36 @@ function Player(ind) {
   this.x = 0;
   this.y = 0;
 
-  this.box = new b2BoxDef();
-  this.box.density = 1.0;
-  this.box.friction = 5;
-  this.box.extents.Set(playerWidth / 2, playerHeight / 2);
+  var fixDef = new b2FixtureDef;
+  fixDef.density = 1.0;
+  fixDef.friction = 0.5;
+  fixDef.restitution = 0.2;
 
-  this.body = new b2BodyDef();
-  this.body.AddShape(this.box);
-  this.body.position.Set(this.x, this.y);
+  this.box = new b2BodyDef();
 
-  this.phys = world.phys.CreateBody(this.body);
-
-  this.jumping = false;
+  fixDef.shape = new b2PolygonShape;
+  fixDef.shape.SetAsBox(playerWidth / 2, playerHeight / 2);
+  this.box.position.x = this.x;
+  this.box.position.y = this.y;
+  this.box.type = b2Body.b2_dynamicBody;
 
   this.tpl();
+  this.phys = world.phys.CreateBody(this.box);
+
+  this.phys.CreateFixture(fixDef);
+
+  // this.box = new b2FixtureDef();
+  // this.box.density = 1.0;
+  // this.box.friction = 5;
+  // this.box.extents.Set(playerWidth / 2, playerHeight / 2);
+
+  // this.body = new b2BodyDef();
+  // this.body.AddShape(this.box);
+  // this.body.position.Set(this.x, this.y);
+
+  // this.phys = world.phys.CreateBody(this.body);
+
+  // this.jumping = false;
 }
 
 Player.prototype.update = function() {
@@ -125,8 +141,8 @@ Player.prototype.render = function() {
   if (this.team) {
     ctx.save();
 
-    var pos = this.phys.GetOriginPosition();
-    var rot = this.phys.GetRotation();
+    var pos = this.phys.GetPosition();
+    var rot = this.phys.GetAngle();
 
     ctx.translate(pos.x, pos.y);
     ctx.rotate(rot);
@@ -141,7 +157,6 @@ Player.prototype.render = function() {
     ctx.restore();
   }
 }
-
 
 Player.prototype.tpl = function() {
   this.div = jQuery('<div class="player"><span class="number">' + (this.ind + 1) + '</span></div>');
