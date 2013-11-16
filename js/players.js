@@ -15,4 +15,20 @@ Players.prototype.render = function() {
   });
 }
 
+Players.prototype.checkReady = function() {
+  if (game.state == 'lobby') {
+    var ready = true;
+    this.forEach(function(player) {
+      if (player.ready) return;
+      ready = false;
+    });
+
+    if (! ready) return;
+
+    game.state = 'game';
+    jQuery('#lobby').removeClass('active');
+    jQuery('#overlay').removeClass('active');
+  }
+}
+
 var players = new Players();

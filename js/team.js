@@ -3,14 +3,23 @@ function Team(id, name) {
   this.name = name;
   this.gate = new Gate(this);
   this.players = new Players();
+  this.count = 0;
 };
 
 Team.prototype.join = function(player) {
-  this.players.push(player);
+  if (this.count < 2) {
+    this.players.push(player);
+    player.team = this;
+    ++this.count;
+  }
 }
 
 Team.prototype.leave = function(player) {
-  this.players.pull(player);
+  if (player.team) {
+    --this.count;
+    player.team = null;
+    this.players.pull(player);
+  }
 }
 
 Team.prototype.update = function() {

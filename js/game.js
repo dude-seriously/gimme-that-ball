@@ -1,5 +1,6 @@
 function Game() {
   this.pads = { };
+  this.state = 'lobby';
 }
 
 var gamePadMaster = null;
@@ -8,13 +9,13 @@ Game.prototype.init = function() {
   teams.init();
   this.loop();
 
-  var i = 10;
-  while(i--) {
-    var player = new Player();
-    player.x = Math.random() * 500 - 250;
-    player.y = Math.random() * 500 - 250;
-    players.push(player);
-  }
+  // var i = 10;
+  // while(i--) {
+  //   var player = new Player();
+  //   player.x = Math.random() * 500 - 250;
+  //   player.y = Math.random() * 500 - 250;
+  //   players.push(player);
+  // }
 
   var i = 10;
   while(i--) {
@@ -35,7 +36,7 @@ Game.prototype.loop = function() {
   while(i--) {
     if (pads[i]) {
       if (! this.pads[pads[i].name]) {
-        var player = new Player();
+        var player = new Player(i);
         player.gamePad = pads[i];
         players.push(player);
 
