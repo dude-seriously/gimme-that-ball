@@ -1,3 +1,15 @@
+var propTypes = {
+  'door': {
+    width: 100,
+    height: 200,
+    image: '',
+    upd: function() {
+
+    }
+  }
+};
+
+
 var propIDs = 0;
 
 function Prop(opt) {
@@ -5,6 +17,10 @@ function Prop(opt) {
 
   this.width = opt.width;
   this.height = opt.height;
+
+  if (opt.upd) {
+    this.upd = opt.upd;
+  }
 
   // this.box = new b2BoxDef();
   // if (! opt.fixed) this.box.density = 1.0;
@@ -36,7 +52,7 @@ function Prop(opt) {
 }
 
 Prop.prototype.update = function() {
-
+  if (this.upd) this.upd.call(this);
 }
 
 Prop.prototype.render = function() {

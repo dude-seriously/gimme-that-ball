@@ -190,7 +190,7 @@ Player.prototype.render = function() {
     ctx.translate(pos.x / pf, pos.y / pf);
     ctx.rotate(rot);
 
-    if (this.team.id == 1) {
+    if (this.team.id == 0) {
       var img = (this.jumping) ? playerImageJump : playerImage;
     } else {
       var img = (this.jumping) ? playerBImageJump : playerBImage;
