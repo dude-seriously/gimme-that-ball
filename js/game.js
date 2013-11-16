@@ -47,7 +47,7 @@ Game.prototype.loop = function() {
           gamePadMaster = pads[i];
         }
 
-        player.gamePad.leftStickX = i % 2 - 1;
+        player.gamePad.leftStickX = (i % 2) * 2 - 1;
         player.gamePad.start = true;
       }
     }

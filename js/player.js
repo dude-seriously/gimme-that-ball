@@ -26,8 +26,8 @@ function Player(ind) {
 
   var fixDef = new b2FixtureDef;
   fixDef.density = 1.0;
-  fixDef.friction = 0.5;
-  fixDef.restitution = 0.2;
+  fixDef.friction = 1;
+  fixDef.restitution = 0;
 
   this.box = new b2BodyDef();
 

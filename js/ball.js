@@ -1,4 +1,5 @@
 var ballSize = 32;
+var ballThrowPower = 2;
 
 function Ball() {
   //this.phys =
@@ -31,8 +32,24 @@ function Ball() {
 
 Ball.prototype.update = function() {
   if (this.player) {
-    this.phys.SetPosition(new b2Vec2(this.player.x * pf, this.player.y * pf));
-    this.phys.SetLinearVelocity(new b2Vec2(0, 0));
+    if (this.player.gamePad && this.player.gamePad.rightShoulder1 > 0.1) {
+      var vel = this.player.phys.GetLinearVelocity().Copy();
+      vel.Multiply(ballThrowPower);
+
+      var posOff = vel.Copy();
+      posOff.Normalize();
+      posOff.Multiply(32);
+
+      this.phys.SetPosition(new b2Vec2((this.player.x + posOff.x * .6) * pf, ((this.player.y + posOff.y) * pf)));
+      this.phys.SetLinearVelocity(vel);
+      // this.phys.SetLinearVelocity(new b2Vec2((Math.random() * 2 - 1.0) * ballThrowPower, (Math.random() * 2 - 1.0) * ballThrowPower));
+
+      this.disabled = false;
+      this.player = null;
+    } else {
+      this.phys.SetPosition(new b2Vec2(this.player.x * pf, this.player.y * pf));
+      this.phys.SetLinearVelocity(new b2Vec2(0, 0));
+    }
   }
 }
 
