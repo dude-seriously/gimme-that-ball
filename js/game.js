@@ -19,13 +19,17 @@ Game.prototype.init = function() {
 
   var i = 20;
   while(i--) {
-    var size = Math.random() * 50 + 50
-    world.addProp({
-      width: size,
-      height: size,
-      x: Math.random() * world.width + world.left,
-      y: Math.random() * world.height + world.top
-    });
+    if (i == 17) {
+      world.addProp(propTypes['big seesaw']);
+    } else {
+      var size = Math.random() * 50 + 50
+      world.addProp({
+        width: size,
+        height: size,
+        x: Math.random() * world.width + world.left,
+        y: Math.random() * world.height + world.top
+      });
+    }
   }
 }
 
