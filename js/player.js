@@ -148,7 +148,7 @@ Player.prototype.update = function() {
 
         // JUMP
 
-        if (this.gamePad.faceButton0 > 0 && this.energy >= 50 && ((new Date()).valueOf() - this.last_jump > 100)) {
+        if (this.gamePad.faceButton0 > 0 && this.energy >= 50 && ((new Date()).valueOf() - this.last_jump > 300)) {
 
           if (this.jumping == false) {
             this.last_jump = (new Date()).valueOf();

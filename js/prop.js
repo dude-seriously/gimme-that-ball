@@ -59,6 +59,15 @@ var propTypes = {
     fixed: true,
     image: '',
     color: "#b97a57"
+  },
+  'vertical platform': {
+  	x: 80,
+  	y: 250,
+    width: 20,
+    height: 300,
+    fixed: true,
+    image: '',
+    color: "#b97a57"
   }
 };
 

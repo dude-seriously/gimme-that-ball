@@ -118,5 +118,4 @@ World.prototype.render = function() {
   });
 }
 
-
 var world = new World();

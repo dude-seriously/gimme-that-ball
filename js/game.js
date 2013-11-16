@@ -24,7 +24,18 @@ Game.prototype.init = function() {
   while(i--) {
     if (i == 17) {
       world.addProp(propTypes['big seesaw']);
+    } else if (i%3 == 0) {
+      var type = propTypes['platform'];
+      type.x =  Math.random() * world.width + world.left;
+      type.y = Math.random() * (world.height-100) + world.top;
+      world.addProp(type);
+    } else if (i%5 == 0) {
+      var type = propTypes['vertical platform'];
+      type.x =  Math.random() * world.width + world.left;
+      type.y = -100 + Math.random() * (world.height-100) + world.top;
+      world.addProp(type);
     } else {
+
       var size = Math.random() * 50 + 50
       world.addProp({
         width: size,
