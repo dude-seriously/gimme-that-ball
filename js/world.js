@@ -9,21 +9,20 @@ function World() {
 
   // box2d
 
-  var b2d = new b2AABB();
-  b2d.minVertex.Set(this.left, this.top);
-  b2d.maxVertex.Set(this.right, this.bottom + this.border);
+  var fixDef = new b2FixtureDef;
+  fixDef.density = 1.0;
+  fixDef.friction = 0.5;
+  fixDef.restitution = 0.2;
 
-  var gravity = new b2Vec2(0, 600);
-  this.phys = new b2World(b2d, gravity, true);
+  var bodyDef = new b2BodyDef;
 
-  // bottom
-  var groundSd = new b2BoxDef();
-  groundSd.extents.Set(this.right - this.left, this.border); // Size of ground
-  groundSd.restitution = 0.2;
-  var groundBd = new b2BodyDef();
-  groundBd.AddShape(groundSd);
-  groundBd.position.Set(0, this.bottom + this.border); // Position
-  this.phys.CreateBody(groundBd);
+  //create ground
+  bodyDef.type = b2Body.b2_staticBody;
+  bodyDef.position.x = 0;
+  bodyDef.position.y = this.bottom + 32;
+  fixDef.shape = new b2PolygonShape;
+  fixDef.shape.SetAsBox(this.right - this.left, 32);
+  this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
 }
 
 World.prototype.addProp = function(opt) {
@@ -34,7 +33,7 @@ World.prototype.updatePhys = function() {
   var stepping = false;
   var timeStep = 1.0/60;
   var iteration = 1;
-  this.phys.Step(timeStep, iteration);
+  this.phys.Step(1/60, 10, 10);
 }
 
 World.prototype.update = function() {
