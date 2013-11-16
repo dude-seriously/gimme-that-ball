@@ -48,7 +48,7 @@ Camera.prototype.update = function() {
 
 Camera.prototype.render = function() {
 
-  if (game.state == 'game' && gamePadMaster && gamePadMaster.leftShoulder0) {
+  if (game.state == 'game' && gamePadMaster && gamePadMaster.leftShoulder1) {
     if (Math.abs(gamePadMaster.leftStickX) > .2) {
       this.target[0] += gamePadMaster.leftStickX * cameraMoveSpeed;
     }

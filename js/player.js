@@ -20,6 +20,8 @@ function Player(ind) {
   this.team = null;
   this.gamePad = null;
   this.ready = false;
+  this.jumping = false;
+  this.dashing = false;
 
   this.x = 0;
   this.y = 0;
@@ -88,13 +90,15 @@ Player.prototype.update = function() {
         }
         break;
       case 'game':
-        if (gamePadMaster == this.gamePad && gamePadMaster.leftShoulder0) return;
+        if (gamePadMaster == this.gamePad && gamePadMaster.leftShoulder1) return;
 
         if (Math.abs(this.gamePad.leftStickX) > .2) {
 
           var vel = this.phys.GetLinearVelocity();
 
-          if ( (this.gamePad.leftStickX < 0 && vel.x > -maxSpeed) || (this.gamePad.leftStickX > 0 && vel.x < maxSpeed) ) {
+          var currMaxSpeed = (ball.player == this) ? maxSpeed * 0.8 : maxSpeed;
+
+          if ( (this.gamePad.leftStickX < 0 && vel.x > -currMaxSpeed) || (this.gamePad.leftStickX > 0 && vel.x < currMaxSpeed) ) {
             this.phys.ApplyForce(new b2Vec2(this.gamePad.leftStickX * moveSpeed * 10,0),this.phys.GetWorldCenter())
           }
 
@@ -116,6 +120,32 @@ Player.prototype.update = function() {
         } else {
           this.jumping = false;
         }
+
+        // DASH
+
+        if (ball.player != this) {
+
+          if (gamePadMaster.leftShoulder0) {
+            if (this.dashing == false) {
+              this.dashing = true;
+              // var vel = this.phys.GetLinearVelocity();
+              // vel.x = -5;
+              var impulse = this.phys.GetMass() * 10;
+              this.phys.ApplyImpulse(new b2Vec2(-impulse,0), this.phys.GetWorldCenter());
+            }
+          } else if (gamePadMaster.rightShoulder0) {
+            if (this.dashing == false) {
+              this.dashing = true;
+              // var vel = this.phys.GetLinearVelocity();
+              // vel.x = 5;
+              var impulse = this.phys.GetMass() * 10;
+              this.phys.ApplyImpulse(new b2Vec2(impulse,0), this.phys.GetWorldCenter());
+            }
+          } else {
+            this.dashing = false;
+          }
+        }
+
 
 
       break;
