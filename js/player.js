@@ -85,49 +85,49 @@ Player.prototype.update = function() {
         }
         break;
       case 'game':
-        if (gamePadMaster == this.gamePad && gamePadMaster.leftShoulder0) return;
+        // if (gamePadMaster == this.gamePad && gamePadMaster.leftShoulder0) return;
 
-        if (Math.abs(this.gamePad.leftStickX) > .2) {
+        // if (Math.abs(this.gamePad.leftStickX) > .2) {
 
-          this.phys.WakeUp();
+        //   this.phys.WakeUp();
 
-          var vel = this.phys.GetLinearVelocity();
+        //   var vel = this.phys.GetLinearVelocity();
 
-          vel.x = this.gamePad.leftStickX * moveSpeed;
+        //   vel.x = this.gamePad.leftStickX * moveSpeed;
 
-          this.phys.SetLinearVelocity(vel);
-          // pos.x += this.gamePad.leftStickX * moveSpeed;
+        //   this.phys.SetLinearVelocity(vel);
+        //   // pos.x += this.gamePad.leftStickX * moveSpeed;
 
-          // this.phys.SetOriginPosition(pos, 0);
-          this.x += this.gamePad.leftStickX * moveSpeed;
-        }
-        if (Math.abs(this.gamePad.leftStickY) > .2) {
-          this.phys.WakeUp();
-          // var vel = this.phys.GetLinearVelocity();
+        //   // this.phys.SetOriginPosition(pos, 0);
+        //   this.x += this.gamePad.leftStickX * moveSpeed;
+        // }
+        // if (Math.abs(this.gamePad.leftStickY) > .2) {
+        //   this.phys.WakeUp();
+        //   // var vel = this.phys.GetLinearVelocity();
 
-          // vel.y = this.gamePad.leftStickY * moveSpeed;
+        //   // vel.y = this.gamePad.leftStickY * moveSpeed;
 
-          // this.phys.SetLinearVelocity(vel);
-          // this.y += this.gamePad.leftStickY * moveSpeed;
-        }
+        //   // this.phys.SetLinearVelocity(vel);
+        //   // this.y += this.gamePad.leftStickY * moveSpeed;
+        // }
 
-        if (this.gamePad.faceButton0 > 0 && this.jumping == false) {
-          this.jumping = true;
+        // if (this.gamePad.faceButton0 > 0 && this.jumping == false) {
+        //   this.jumping = true;
 
-          this.phys.WakeUp();
-          var vel = this.phys.GetLinearVelocity();
+        //   this.phys.WakeUp();
+        //   var vel = this.phys.GetLinearVelocity();
 
-          vel.y = -moveSpeed/2;
+        //   vel.y = -moveSpeed/2;
 
-          this.phys.SetLinearVelocity(vel);
+        //   this.phys.SetLinearVelocity(vel);
 
-          // var impulse = this.phys.GetMass() * 10;
+        //   // var impulse = this.phys.GetMass() * 10;
 
-          // this.phys.ApplyImpulse( new b2Vec2(100,-500), this.phys.GetCenterPosition() );
+        //   // this.phys.ApplyImpulse( new b2Vec2(100,-500), this.phys.GetCenterPosition() );
 
-        } else {
-          this.jumping = false;
-        }
+        // } else {
+        //   this.jumping = false;
+        // }
         break;
     }
   }
