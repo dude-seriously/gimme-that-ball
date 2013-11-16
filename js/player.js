@@ -16,6 +16,7 @@ var playerWidth = 36;
 var lobbyPlayers = jQuery('#lobby-players');
 
 var maxSpeed = 3;
+var maxEnergy = 100;
 
 function Player(ind) {
   this.id = ++playerIDs;
@@ -28,6 +29,9 @@ function Player(ind) {
   this.dashing = false;
 
   this.last_dash = 0;
+  this.last_jump = 0;
+
+  this.energy = maxEnergy;
 
   this.x = 0;
   this.y = 0;
@@ -65,6 +69,10 @@ Player.prototype.collide = function(contact) {
 }
 
 Player.prototype.update = function() {
+  if (this.energy < maxEnergy) {
+    this.energy++;
+  }
+
   if (this.gamePad) {
     switch(game.state) {
       case 'lobby':
@@ -112,11 +120,11 @@ Player.prototype.update = function() {
 
         // JUMP
 
-        if (this.gamePad.faceButton0 > 0) {
+        if (this.gamePad.faceButton0 > 0 && this.energy >= 50) {
 
           if (this.jumping == false) {
             this.jumping = true;
-
+            this.energy -= 50;
             var vel = this.phys.GetLinearVelocity();
 
             var impulse = this.phys.GetMass() * 4;
@@ -160,7 +168,7 @@ Player.prototype.update = function() {
     }
   }
 
-  this.phys.SetAngle(0);
+  !this.gamePad.faceButton1 && this.phys.SetAngle(0);
 }
 
 Player.prototype.jump = function() {
