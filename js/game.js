@@ -15,6 +15,16 @@ Game.prototype.init = function() {
     player.y = Math.random() * 500 - 250;
     players.push(player);
   }
+
+  var i = 10;
+  while(i--) {
+    world.addProp({
+      width: 50,
+      height: 50,
+      x: Math.random() * 400 - 200,
+      y: Math.random() * 400 - 200
+    });
+  }
 }
 
 Game.prototype.loop = function() {
@@ -44,7 +54,7 @@ Game.prototype.loop = function() {
   players.update();
   teams.update();
 
-  world.phys();
+  world.updatePhys();
 
   camera.render();
 

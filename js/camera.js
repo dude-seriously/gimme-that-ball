@@ -16,7 +16,7 @@ function Camera() {
 
 Camera.prototype.render = function() {
 
-  if (gamePadMaster.leftShoulder0) {
+  if (gamePadMaster && gamePadMaster.leftShoulder0) {
     if (Math.abs(gamePadMaster.leftStickX) > .2) {
       this.target[0] += gamePadMaster.leftStickX * cameraMoveSpeed;
     }

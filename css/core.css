@@ -3,7 +3,7 @@ body{margin:0;background:#323232;color:#fff;font-family:Helvetica,sans-serif;ove
 .modal{position:absolute;top:50%;left:50%;background:#323232;border-radius:4px;-moz-box-shadow:0 0 16px rgba(0,0,0,0.3);-webkit-box-shadow:0 0 16px rgba(0,0,0,0.3);box-shadow:0 0 16px rgba(0,0,0,0.3);border:1px solid #222}
 #lobby{width:512px;height:512px;margin:-256px 0 0 -256px}#lobby>h1{font-weight:100;text-align:center;margin:8px 0}
 #lobby>h2{font-weight:100;text-align:center;margin:8px 0 32px}
-#lobby>.lobby{float:left;width:64px;text-align:center}
+#lobby>.lobby{float:left;width:64px;text-align:center}#lobby>.lobby>.player{height:48px;line-height:48px;background:#222;margin:8px}#lobby>.lobby>.player>.number{text-align:center}
 #lobby>.teams{float:left;width:224px}#lobby>.teams.team-a{text-align:left}#lobby>.teams.team-a>.player>.number{float:left}
 #lobby>.teams.team-b{text-align:right}#lobby>.teams.team-b>.player>.number{float:right}
-#lobby>.teams>.player{height:48px;line-height:48px;background:#222;padding:0}#lobby>.teams>.player>.number{font-size:18px;padding:0 8px}
+#lobby>.teams>.player{height:48px;line-height:48px;background:#222;margin:4px}#lobby>.teams>.player>.number{font-size:18px;padding:0 8px}
