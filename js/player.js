@@ -1,5 +1,5 @@
 var playerIDs = 0;
-var moveSpeed = 5;
+var moveSpeed = 2;
 
 var playerImage = new Image();
 var playerImageJump = new Image();
@@ -10,6 +10,8 @@ var playerHeight = 60;
 var playerWidth = 36;
 
 var lobbyPlayers = jQuery('#lobby-players');
+
+var maxSpeed = 3;
 
 function Player(ind) {
   this.id = ++playerIDs;
@@ -76,48 +78,37 @@ Player.prototype.update = function() {
 
         if (Math.abs(this.gamePad.leftStickX) > .2) {
 
-          // this.phys.WakeUp();
-
           var vel = this.phys.GetLinearVelocity();
 
-          vel.x = this.gamePad.leftStickX * moveSpeed;
+          if ( (this.gamePad.leftStickX < 0 && vel.x > -maxSpeed) || (this.gamePad.leftStickX > 0 && vel.x < maxSpeed) ) {
+            this.phys.ApplyForce(new b2Vec2(this.gamePad.leftStickX * moveSpeed * 10,0),this.phys.GetWorldCenter())
+          }
 
-          this.phys.SetLinearVelocity(vel);
-          // pos.x += this.gamePad.leftStickX * moveSpeed;
-
-          // this.phys.SetOriginPosition(pos, 0);
-          this.x += this.gamePad.leftStickX * moveSpeed;
-        }
-        if (Math.abs(this.gamePad.leftStickY) > .2) {
-          // this.phys.WakeUp();
-          // var vel = this.phys.GetLinearVelocity();
-
-          // vel.y = this.gamePad.leftStickY * moveSpeed;
-
-          // this.phys.SetLinearVelocity(vel);
-          // this.y += this.gamePad.leftStickY * moveSpeed;
         }
 
-        if (this.gamePad.faceButton0 > 0 && this.jumping == false) {
-          this.jumping = true;
+        // JUMP
 
-          // this.phys.WakeUp();
-          var vel = this.phys.GetLinearVelocity();
+        if (this.gamePad.faceButton0 > 0) {
 
-          vel.y = -moveSpeed/2;
+          if (this.jumping == false) {
+            this.jumping = true;
 
-          this.phys.SetLinearVelocity(vel);
+            var vel = this.phys.GetLinearVelocity();
 
-          // var impulse = this.phys.GetMass() * 10;
-
-          // this.phys.ApplyImpulse( new b2Vec2(100,-500), this.phys.GetCenterPosition() );
+            var impulse = this.phys.GetMass() * 4;
+            this.phys.ApplyImpulse(new b2Vec2(0,-impulse), this.phys.GetWorldCenter());
+          }
 
         } else {
           this.jumping = false;
         }
-        break;
+
+
+      break;
     }
   }
+
+  this.phys.SetAngle(0);
 }
 
 Player.prototype.jump = function() {
@@ -136,7 +127,8 @@ Player.prototype.render = function() {
 
     ctx.translate(pos.x / pf, pos.y / pf);
     ctx.rotate(rot);
-    ctx.drawImage(playerImage, -(playerWidth/2), -(playerHeight/2));
+    var img = (this.jumping) ? playerImageJump : playerImage;
+    ctx.drawImage(img, -(playerWidth/2), -(playerHeight/2));
 
     // if (this.team.id == 1) {
     //   ctx.fillStyle = '#06f';
