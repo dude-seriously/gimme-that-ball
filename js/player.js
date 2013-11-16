@@ -1,5 +1,5 @@
 var playerIDs = 0;
-var moveSpeed = 500;
+var moveSpeed = 5;
 
 var playerImage = new Image();
 var playerImageJump = new Image();
@@ -29,28 +29,15 @@ function Player(ind) {
   this.box = new b2BodyDef();
 
   fixDef.shape = new b2PolygonShape;
-  fixDef.shape.SetAsBox(playerWidth / 2, playerHeight / 2);
-  this.box.position.x = this.x;
-  this.box.position.y = this.y;
+  fixDef.shape.SetAsBox((playerWidth / 2) * pf, (playerHeight / 2) * pf);
+  this.box.position.x = this.x * pf;
+  this.box.position.y = this.y * pf;
   this.box.type = b2Body.b2_dynamicBody;
 
   this.tpl();
   this.phys = world.phys.CreateBody(this.box);
 
   this.phys.CreateFixture(fixDef);
-
-  // this.box = new b2FixtureDef();
-  // this.box.density = 1.0;
-  // this.box.friction = 5;
-  // this.box.extents.Set(playerWidth / 2, playerHeight / 2);
-
-  // this.body = new b2BodyDef();
-  // this.body.AddShape(this.box);
-  // this.body.position.Set(this.x, this.y);
-
-  // this.phys = world.phys.CreateBody(this.body);
-
-  // this.jumping = false;
 }
 
 Player.prototype.update = function() {
@@ -85,49 +72,49 @@ Player.prototype.update = function() {
         }
         break;
       case 'game':
-        // if (gamePadMaster == this.gamePad && gamePadMaster.leftShoulder0) return;
+        if (gamePadMaster == this.gamePad && gamePadMaster.leftShoulder0) return;
 
-        // if (Math.abs(this.gamePad.leftStickX) > .2) {
+        if (Math.abs(this.gamePad.leftStickX) > .2) {
 
-        //   this.phys.WakeUp();
+          // this.phys.WakeUp();
 
-        //   var vel = this.phys.GetLinearVelocity();
+          var vel = this.phys.GetLinearVelocity();
 
-        //   vel.x = this.gamePad.leftStickX * moveSpeed;
+          vel.x = this.gamePad.leftStickX * moveSpeed;
 
-        //   this.phys.SetLinearVelocity(vel);
-        //   // pos.x += this.gamePad.leftStickX * moveSpeed;
+          this.phys.SetLinearVelocity(vel);
+          // pos.x += this.gamePad.leftStickX * moveSpeed;
 
-        //   // this.phys.SetOriginPosition(pos, 0);
-        //   this.x += this.gamePad.leftStickX * moveSpeed;
-        // }
-        // if (Math.abs(this.gamePad.leftStickY) > .2) {
-        //   this.phys.WakeUp();
-        //   // var vel = this.phys.GetLinearVelocity();
+          // this.phys.SetOriginPosition(pos, 0);
+          this.x += this.gamePad.leftStickX * moveSpeed;
+        }
+        if (Math.abs(this.gamePad.leftStickY) > .2) {
+          // this.phys.WakeUp();
+          // var vel = this.phys.GetLinearVelocity();
 
-        //   // vel.y = this.gamePad.leftStickY * moveSpeed;
+          // vel.y = this.gamePad.leftStickY * moveSpeed;
 
-        //   // this.phys.SetLinearVelocity(vel);
-        //   // this.y += this.gamePad.leftStickY * moveSpeed;
-        // }
+          // this.phys.SetLinearVelocity(vel);
+          // this.y += this.gamePad.leftStickY * moveSpeed;
+        }
 
-        // if (this.gamePad.faceButton0 > 0 && this.jumping == false) {
-        //   this.jumping = true;
+        if (this.gamePad.faceButton0 > 0 && this.jumping == false) {
+          this.jumping = true;
 
-        //   this.phys.WakeUp();
-        //   var vel = this.phys.GetLinearVelocity();
+          // this.phys.WakeUp();
+          var vel = this.phys.GetLinearVelocity();
 
-        //   vel.y = -moveSpeed/2;
+          vel.y = -moveSpeed/2;
 
-        //   this.phys.SetLinearVelocity(vel);
+          this.phys.SetLinearVelocity(vel);
 
-        //   // var impulse = this.phys.GetMass() * 10;
+          // var impulse = this.phys.GetMass() * 10;
 
-        //   // this.phys.ApplyImpulse( new b2Vec2(100,-500), this.phys.GetCenterPosition() );
+          // this.phys.ApplyImpulse( new b2Vec2(100,-500), this.phys.GetCenterPosition() );
 
-        // } else {
-        //   this.jumping = false;
-        // }
+        } else {
+          this.jumping = false;
+        }
         break;
     }
   }
@@ -144,10 +131,10 @@ Player.prototype.render = function() {
     var pos = this.phys.GetPosition();
     var rot = this.phys.GetAngle();
 
-    this.x = pos.x;
-    this.y = pos.y;
+    this.x = pos.x / pf;
+    this.y = pos.y / pf;
 
-    ctx.translate(pos.x, pos.y);
+    ctx.translate(pos.x / pf, pos.y / pf);
     ctx.rotate(rot);
     ctx.drawImage(playerImage, -(playerWidth/2), -(playerHeight/2));
 

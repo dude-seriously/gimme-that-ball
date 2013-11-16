@@ -27,9 +27,9 @@ function Prop(opt) {
   if (! opt.fixed) this.box.type = b2Body.b2_dynamicBody;
 
   fixDef.shape = new b2PolygonShape;
-  fixDef.shape.SetAsBox(opt.width / 2, opt.height / 2);
-  this.box.position.x = opt.x;
-  this.box.position.y = opt.y;
+  fixDef.shape.SetAsBox(opt.width / 2 * pf, opt.height / 2 * pf);
+  this.box.position.x = opt.x * pf;
+  this.box.position.y = opt.y * pf;
 
   this.phys = world.phys.CreateBody(this.box);
   this.phys.CreateFixture(fixDef);
@@ -45,7 +45,7 @@ Prop.prototype.render = function() {
   var pos = this.phys.GetPosition();
   var rot = this.phys.GetAngle();
 
-  ctx.translate(pos.x, pos.y);
+  ctx.translate(pos.x / pf, pos.y / pf);
   ctx.rotate(rot);
 
   ctx.beginPath();

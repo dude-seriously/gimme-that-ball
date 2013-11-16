@@ -46,6 +46,9 @@ Game.prototype.loop = function() {
         if (! gamePadMaster && i == 0) {
           gamePadMaster = pads[i];
         }
+
+        player.gamePad.leftStickX = i % 2 - 1;
+        player.gamePad.start = true;
       }
     }
   }

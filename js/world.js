@@ -1,3 +1,5 @@
+var pf = .01;
+
 function World() {
   this.border = 32;
   this.left = -1024;
@@ -8,7 +10,7 @@ function World() {
   this.props = new Collection();
 
   // box2d
-  var gravity = new b2Vec2(0, 1000);
+  var gravity = new b2Vec2(0, 10);
   this.phys = new b2World(gravity, true);
 
   var fixDef = new b2FixtureDef;
@@ -20,9 +22,9 @@ function World() {
 
   //create ground
   bodyDef.type = b2Body.b2_staticBody;
-  bodyDef.position.Set(0, this.bottom + 32);
+  bodyDef.position.Set(0, (this.bottom + 32) * pf);
   fixDef.shape = new b2PolygonShape;
-  fixDef.shape.SetAsBox(this.right - this.left, 32);
+  fixDef.shape.SetAsBox((this.right - this.left) * pf, 32 * pf);
   this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
 }
 
