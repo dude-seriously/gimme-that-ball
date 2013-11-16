@@ -1,6 +1,6 @@
 var playerIDs = 0;
 var moveSpeed = 2;
-var jumpFactor = 6;
+var jumpFactor = 7;
 var dashFactor = 5;
 var cantGrabThrowDelay = 500;
 var cantGrabKickDelay = 1000;
@@ -217,6 +217,15 @@ Player.prototype.render = function() {
     this.y = pos.y / pf;
 
     ctx.translate(pos.x / pf, pos.y / pf);
+
+    var energyLeft = this.energy / maxEnergy * playerWidth;
+    ctx.beginPath();
+    ctx.rect(-energyLeft * .5, - playerHeight / 2 - 12, energyLeft, 4);
+    ctx.globalAlpha = .5;
+    ctx.fillStyle = this.team.id == 0 ? '#f60' : '#06f';
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
     ctx.rotate(rot);
 
     if (this.team.id == 0) {

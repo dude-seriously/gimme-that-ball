@@ -2,8 +2,8 @@ var pf = .01;
 
 function World() {
   this.border = 32;
-  this.left = -2048;
-  this.right = 2048;
+  this.left = -1024;
+  this.right = 1024;
   this.top = -512;
   this.bottom = 256;
 

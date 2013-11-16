@@ -1,6 +1,7 @@
 function Team(id, name) {
   this.id = id;
   this.name = name;
+  this.score = 0;
   this.gate = new Gate(this);
   this.players = new Players();
 };
@@ -23,4 +24,8 @@ Team.prototype.update = function() {
 
 Team.prototype.render = function() {
   this.gate.render();
+}
+
+Team.prototype.tpl = function() {
+  jQuery('#score-' + (this.id == 0 ? 'a' : 'b')).text(this.score);
 }

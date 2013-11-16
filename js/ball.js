@@ -60,11 +60,11 @@ Ball.prototype.render = function() {
   }
   var rot = this.phys.GetAngle();
 
-  this.x = pos.x / pf;
-  this.y = pos.y / pf;
+  this.x += (pos.x / pf - this.x) * .5;
+  this.y += (pos.y / pf - this.y) * .5;
 
   ctx.beginPath();
-  ctx.translate(pos.x / pf, pos.y / pf);
+  ctx.translate(this.x, this.y);
   // ctx.rotate(rot);
 
   ctx.drawImage(imgBall, - ballSize / 2, - ballSize / 2);
