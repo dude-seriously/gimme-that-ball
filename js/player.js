@@ -7,6 +7,10 @@ var playerImage = new Image();
 var playerImageJump = new Image();
 playerImage.src = "./img/player.png";
 playerImageJump.src = "./img/player_jump.png";
+var playerBImage = new Image();
+var playerBImageJump = new Image();
+playerBImage.src = "./img/playerb.png";
+playerBImageJump.src = "./img/playerb_jump.png";
 
 var playerHeight = 60;
 var playerWidth = 36;
@@ -14,6 +18,7 @@ var playerWidth = 36;
 var lobbyPlayers = jQuery('#lobby-players');
 
 var maxSpeed = 3;
+var maxEnergy = 100;
 
 function Player(ind) {
   this.id = ++playerIDs;
@@ -24,6 +29,11 @@ function Player(ind) {
   this.ready = false;
   this.jumping = false;
   this.dashing = false;
+
+  this.last_dash = 0;
+  this.last_jump = 0;
+
+  this.energy = maxEnergy;
 
   this.x = 0;
   this.y = 0;
@@ -61,6 +71,10 @@ Player.prototype.collide = function(contact) {
 }
 
 Player.prototype.update = function() {
+  if (this.energy < maxEnergy) {
+    this.energy++;
+  }
+
   if (this.gamePad) {
     switch(game.state) {
       case 'lobby':
@@ -108,11 +122,11 @@ Player.prototype.update = function() {
 
         // JUMP
 
-        if (this.gamePad.faceButton0 > 0) {
+        if (this.gamePad.faceButton0 > 0 && this.energy >= 50) {
 
           if (this.jumping == false) {
             this.jumping = true;
-
+            this.energy -= 50;
             var vel = this.phys.GetLinearVelocity();
 
             var impulse = this.phys.GetMass() * jumpFactor;
@@ -125,10 +139,11 @@ Player.prototype.update = function() {
 
         // DASH
 
-        if (ball.player != this) {
+        if (ball.player != this && ((new Date()).valueOf() - this.last_dash > 1000)) {
 
           if (this.gamePad.leftShoulder0) {
             if (this.dashing == false) {
+              this.last_dash = (new Date()).valueOf();
               this.dashing = true;
               // var vel = this.phys.GetLinearVelocity();
               // vel.x = -5;
@@ -137,6 +152,7 @@ Player.prototype.update = function() {
             }
           } else if (this.gamePad.rightShoulder0) {
             if (this.dashing == false) {
+              this.last_dash = (new Date()).valueOf();
               this.dashing = true;
               // var vel = this.phys.GetLinearVelocity();
               // vel.x = 5;
@@ -154,7 +170,7 @@ Player.prototype.update = function() {
     }
   }
 
-  this.phys.SetAngle(0);
+  !this.gamePad.faceButton1 && this.phys.SetAngle(0);
 }
 
 Player.prototype.jump = function() {
@@ -173,14 +189,14 @@ Player.prototype.render = function() {
 
     ctx.translate(pos.x / pf, pos.y / pf);
     ctx.rotate(rot);
-    var img = (this.jumping) ? playerImageJump : playerImage;
-    ctx.drawImage(img, -(playerWidth/2), -(playerHeight/2));
 
-    // if (this.team.id == 1) {
-    //   ctx.fillStyle = '#06f';
-    // } else {
-    //   ctx.fillStyle = '#f60';
-    // }
+    if (this.team.id == 1) {
+      var img = (this.jumping) ? playerImageJump : playerImage;
+    } else {
+      var img = (this.jumping) ? playerBImageJump : playerBImage;
+    }
+
+    ctx.drawImage(img, -(playerWidth/2), -(playerHeight/2));
 
     ctx.restore();
   }
