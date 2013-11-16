@@ -17,15 +17,15 @@ Game.prototype.init = function() {
   //   players.push(player);
   // }
 
-  var i = 10;
-  while(i--) {
-    world.addProp({
-      width: 50,
-      height: 50,
-      x: Math.random() * 400 - 200,
-      y: Math.random() * 400 - 200
-    });
-  }
+  // var i = 10;
+  // while(i--) {
+  //   world.addProp({
+  //     width: 50,
+  //     height: 50,
+  //     x: Math.random() * 400 - 200,
+  //     y: Math.random() * 400 - 200
+  //   });
+  // }
 }
 
 Game.prototype.loop = function() {
