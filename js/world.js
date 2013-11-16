@@ -8,6 +8,8 @@ function World() {
   this.props = new Collection();
 
   // box2d
+  var gravity = new b2Vec2(0, 10);
+  this.phys = new b2World(gravity, true);
 
   var fixDef = new b2FixtureDef;
   fixDef.density = 1.0;

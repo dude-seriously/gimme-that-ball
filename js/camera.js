@@ -15,35 +15,35 @@ function Camera() {
 }
 
 Camera.prototype.update = function() {
-  this.target[0] = 0;
-  this.target[1] = 0;
-  cameraPlayers = 0;
+  // this.target[0] = 0;
+  // this.target[1] = 0;
+  // cameraPlayers = 0;
 
-  var xMin =  Infinity;
-  var xMax = -Infinity;
-  var yMin =  Infinity;
-  var yMax = -Infinity;
+  // var xMin =  Infinity;
+  // var xMax = -Infinity;
+  // var yMin =  Infinity;
+  // var yMax = -Infinity;
 
-  players.forEach(function(player) {
-    cameraPlayers++;
-    var pos = player.phys.GetOriginPosition();
-    camera.target[0] += pos.x;
-    camera.target[1] += pos.y;
+  // players.forEach(function(player) {
+  //   cameraPlayers++;
+  //   var pos = player.phys.GetOriginPosition();
+  //   camera.target[0] += pos.x;
+  //   camera.target[1] += pos.y;
 
-    if (pos.x > xMax) xMax = pos.x;
-    if (pos.x < xMin) xMin = pos.x;
-    if (pos.y > yMax) yMax = pos.y;
-    if (pos.y < yMin) yMin = pos.y;
-  });
+  //   if (pos.x > xMax) xMax = pos.x;
+  //   if (pos.x < xMin) xMin = pos.x;
+  //   if (pos.y > yMax) yMax = pos.y;
+  //   if (pos.y < yMin) yMin = pos.y;
+  // });
 
-  this.target[0] /= cameraPlayers;
-  this.target[1] /= cameraPlayers;
+  // this.target[0] /= cameraPlayers;
+  // this.target[1] /= cameraPlayers;
 
-  var xDist = xMax - xMin;
-  var yDist = yMax - yMin;
+  // var xDist = xMax - xMin;
+  // var yDist = yMax - yMin;
 
-  var dist = Math.max(100, Math.min(1000, xDist > yDist ? xDist : yDist));
-  this.targetZoom = 1.0 - (dist / 1000 - .5);
+  // var dist = Math.max(100, Math.min(1000, xDist > yDist ? xDist : yDist));
+  // this.targetZoom = 1.0 - (dist / 1000 - .5);
 }
 
 Camera.prototype.render = function() {
