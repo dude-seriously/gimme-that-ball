@@ -1,7 +1,7 @@
 var playerIDs = 0;
 var moveSpeed = 2;
 var jumpFactor = 6;
-var dashFactor = 6;
+var dashFactor = 4;
 
 var playerImage = new Image();
 var playerImageJump = new Image();
@@ -38,10 +38,12 @@ function Player(ind) {
   this.x = 0;
   this.y = 0;
 
+  this.moveLeft = true;
+
   var fixDef = new b2FixtureDef;
   fixDef.density = 1.0;
-  fixDef.friction = 1;
-  fixDef.restitution = 0;
+  fixDef.friction = .8;
+  fixDef.restitution = .1;
 
   this.box = new b2BodyDef();
 
@@ -106,7 +108,7 @@ Player.prototype.update = function() {
         }
         break;
       case 'game':
-        if (gamePadMaster == this.gamePad && gamePadMaster.leftShoulder1) return;
+        // if (gamePadMaster == this.gamePad && gamePadMaster.leftShoulder1) return;
 
         if (Math.abs(this.gamePad.leftStickX) > .2) {
 
@@ -184,6 +186,10 @@ Player.prototype.render = function() {
     var pos = this.phys.GetPosition();
     var rot = this.phys.GetAngle();
 
+    if (Math.abs(this.phys.GetLinearVelocity().x) > .1) {
+      this.moveLeft = this.phys.GetLinearVelocity().x < 0;
+    }
+
     this.x = pos.x / pf;
     this.y = pos.y / pf;
 
@@ -196,6 +202,7 @@ Player.prototype.render = function() {
       var img = (this.jumping) ? playerBImageJump : playerBImage;
     }
 
+    ctx.scale(this.moveLeft ? -1 : 1, 1);
     ctx.drawImage(img, -(playerWidth/2), -(playerHeight/2));
 
     ctx.restore();

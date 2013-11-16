@@ -1,5 +1,5 @@
 var camera = new Camera();
-var cameraEasingF = .1;
+var cameraEasingF = .15;
 
 var cameraZoomSpeed = .05;
 var cameraMoveSpeed = 15;
@@ -50,7 +50,7 @@ Camera.prototype.update = function() {
   this.target[0] /= cameraPlayers;
   this.target[1] /= cameraPlayers;
 
-  this.target[1] -= 128;
+  this.target[1] -= 64;
 
   var xDist = xMax - xMin;
   var yDist = yMax - yMin;
@@ -61,18 +61,18 @@ Camera.prototype.update = function() {
 
 Camera.prototype.render = function() {
 
-  if (game.state == 'game' && gamePadMaster && gamePadMaster.leftShoulder1) {
-    if (Math.abs(gamePadMaster.leftStickX) > .2) {
-      this.target[0] += gamePadMaster.leftStickX * cameraMoveSpeed;
-    }
-    if (Math.abs(gamePadMaster.leftStickY) > .2) {
-      this.target[1] += gamePadMaster.leftStickY * cameraMoveSpeed;
-    }
+  // if (game.state == 'game' && gamePadMaster && gamePadMaster.leftShoulder1) {
+  //   if (Math.abs(gamePadMaster.leftStickX) > .2) {
+  //     this.target[0] += gamePadMaster.leftStickX * cameraMoveSpeed;
+  //   }
+  //   if (Math.abs(gamePadMaster.leftStickY) > .2) {
+  //     this.target[1] += gamePadMaster.leftStickY * cameraMoveSpeed;
+  //   }
 
-    if (Math.abs(gamePadMaster.rightStickY) > .2) {
-      this.targetZoom = Math.max(cameraZoomMin, Math.min(cameraZoomMax, this.targetZoom - gamePadMaster.rightStickY * cameraZoomSpeed));
-    }
-  }
+  //   if (Math.abs(gamePadMaster.rightStickY) > .2) {
+  //     this.targetZoom = Math.max(cameraZoomMin, Math.min(cameraZoomMax, this.targetZoom - gamePadMaster.rightStickY * cameraZoomSpeed));
+  //   }
+  // }
 
   this.pos[0] += (this.target[0] - this.pos[0]) * cameraEasingF;
   this.pos[1] += (this.target[1] - this.pos[1]) * cameraEasingF;

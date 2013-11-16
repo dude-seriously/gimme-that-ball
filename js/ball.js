@@ -1,5 +1,8 @@
 var ballSize = 32;
-var ballThrowPower = 2;
+var ballThrowPower = 8;
+
+var imgBall = new Image();
+imgBall.src = './img/ball.png';
 
 function Ball() {
   //this.phys =
@@ -9,8 +12,8 @@ function Ball() {
 
   this.fixture = new b2FixtureDef;
   this.fixture.density = 1.0;
-  this.fixture.friction = 0.01;
-  this.fixture.restitution = 0.8;
+  this.fixture.friction = 0.7;
+  this.fixture.restitution = 0.7;
 
   this.box = new b2BodyDef();
 
@@ -33,8 +36,12 @@ function Ball() {
 Ball.prototype.update = function() {
   if (this.player) {
     if (this.player.gamePad && this.player.gamePad.rightShoulder1 > 0.1) {
-      var vel = this.player.phys.GetLinearVelocity().Copy();
+      var vel = new b2Vec2(this.player.gamePad.leftStickX, this.player.gamePad.leftStickY);
+      vel.Normalize();
       vel.Multiply(ballThrowPower);
+      var playerVelocity = this.player.phys.GetLinearVelocity();
+      vel.x += playerVelocity.x * .3;
+      vel.y += playerVelocity.y * .3;
 
       var posOff = vel.Copy();
       posOff.Normalize();
@@ -67,17 +74,9 @@ Ball.prototype.render = function() {
 
   ctx.beginPath();
   ctx.translate(pos.x / pf, pos.y / pf);
-  ctx.rotate(rot);
-  ctx.arc(0, 0, ballSize / 2, 0, 2 * Math.PI, false);
-  ctx.fillStyle = '#fff';
-  ctx.fill();
-  // ctx.drawImage(playerImage, -(playerWidth/2), -(playerHeight/2));
+  // ctx.rotate(rot);
 
-  // if (this.team.id == 1) {
-  //   ctx.fillStyle = '#06f';
-  // } else {
-  //   ctx.fillStyle = '#f60';
-  // }
+  ctx.drawImage(imgBall, - ballSize / 2, - ballSize / 2);
 
   ctx.restore();
 }
