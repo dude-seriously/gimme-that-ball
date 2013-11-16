@@ -1,5 +1,7 @@
 var playerIDs = 0;
 var moveSpeed = 2;
+var jumpFactor = 6;
+var dashFactor = 6;
 
 var playerImage = new Image();
 var playerImageJump = new Image();
@@ -113,7 +115,7 @@ Player.prototype.update = function() {
 
             var vel = this.phys.GetLinearVelocity();
 
-            var impulse = this.phys.GetMass() * 4;
+            var impulse = this.phys.GetMass() * jumpFactor;
             this.phys.ApplyImpulse(new b2Vec2(0,-impulse), this.phys.GetWorldCenter());
           }
 
@@ -125,20 +127,20 @@ Player.prototype.update = function() {
 
         if (ball.player != this) {
 
-          if (gamePadMaster.leftShoulder0) {
+          if (this.gamePad.leftShoulder0) {
             if (this.dashing == false) {
               this.dashing = true;
               // var vel = this.phys.GetLinearVelocity();
               // vel.x = -5;
-              var impulse = this.phys.GetMass() * 10;
+              var impulse = this.phys.GetMass() * dashFactor;
               this.phys.ApplyImpulse(new b2Vec2(-impulse,0), this.phys.GetWorldCenter());
             }
-          } else if (gamePadMaster.rightShoulder0) {
+          } else if (this.gamePad.rightShoulder0) {
             if (this.dashing == false) {
               this.dashing = true;
               // var vel = this.phys.GetLinearVelocity();
               // vel.x = 5;
-              var impulse = this.phys.GetMass() * 10;
+              var impulse = this.phys.GetMass() * dashFactor;
               this.phys.ApplyImpulse(new b2Vec2(impulse,0), this.phys.GetWorldCenter());
             }
           } else {

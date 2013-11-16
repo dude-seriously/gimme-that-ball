@@ -4,7 +4,7 @@ var cameraEasingF = .1;
 var cameraZoomSpeed = .05;
 var cameraMoveSpeed = 15;
 
-var cameraZoomMin = .5;
+var cameraZoomMin = .3;
 var cameraZoomMax = 2;
 
 function Camera() {
@@ -15,35 +15,48 @@ function Camera() {
 }
 
 Camera.prototype.update = function() {
-  // this.target[0] = 0;
-  // this.target[1] = 0;
-  // cameraPlayers = 0;
+  this.target[0] = 0;
+  this.target[1] = 0;
+  cameraPlayers = 0;
 
-  // var xMin =  Infinity;
-  // var xMax = -Infinity;
-  // var yMin =  Infinity;
-  // var yMax = -Infinity;
+  var xMin =  Infinity;
+  var xMax = -Infinity;
+  var yMin =  Infinity;
+  var yMax = -Infinity;
 
-  // players.forEach(function(player) {
-  //   cameraPlayers++;
-  //   var pos = player.phys.GetOriginPosition();
-  //   camera.target[0] += pos.x;
-  //   camera.target[1] += pos.y;
+  var addPos = function(phys) {
+    cameraPlayers++;
+    var pos = phys.GetPosition();
+    camera.target[0] += pos.x / pf;
+    camera.target[1] += pos.y / pf;
 
-  //   if (pos.x > xMax) xMax = pos.x;
-  //   if (pos.x < xMin) xMin = pos.x;
-  //   if (pos.y > yMax) yMax = pos.y;
-  //   if (pos.y < yMin) yMin = pos.y;
-  // });
+    if (pos.x / pf > xMax) xMax = pos.x / pf;
+    if (pos.x / pf < xMin) xMin = pos.x / pf;
+    if (pos.y / pf > yMax) yMax = pos.y / pf;
+    if (pos.y / pf < yMin) yMin = pos.y / pf;
+  }
 
-  // this.target[0] /= cameraPlayers;
-  // this.target[1] /= cameraPlayers;
+  players.forEach(function(player) {
+    addPos(player.phys);
+  });
 
-  // var xDist = xMax - xMin;
-  // var yDist = yMax - yMin;
+  addPos(ball.phys);
+  addPos(ball.phys);
 
-  // var dist = Math.max(100, Math.min(1000, xDist > yDist ? xDist : yDist));
-  // this.targetZoom = 1.0 - (dist / 1000 - .5);
+  if (ball.player) {
+    addPos(ball.player.phys);
+  }
+
+  this.target[0] /= cameraPlayers;
+  this.target[1] /= cameraPlayers;
+
+  this.target[1] -= 128;
+
+  var xDist = xMax - xMin;
+  var yDist = yMax - yMin;
+
+  var dist = Math.max(100, Math.min(1000, xDist > yDist ? xDist : yDist));
+  this.targetZoom = Math.max(cameraZoomMin, Math.min(cameraZoomMax, 1.1 - (dist / 1000 - .5)));
 }
 
 Camera.prototype.render = function() {

@@ -2,29 +2,67 @@ var pf = .01;
 
 function World() {
   this.border = 32;
-  this.left = -1024;
-  this.right = 1024;
+  this.left = -2048;
+  this.right = 2048;
   this.top = -512;
   this.bottom = 256;
+
+  this.width = this.right - this.left;
+  this.height = this.bottom - this.top;
 
   this.props = new Collection();
 
   // box2d
-  var gravity = new b2Vec2(0, 10);
+  var gravity = new b2Vec2(0, 15);
   this.phys = new b2World(gravity, true);
 
+
+  // bottom
   var fixDef = new b2FixtureDef;
   fixDef.density = 1.0;
   fixDef.friction = 0.5;
   fixDef.restitution = 0.2;
-
   var bodyDef = new b2BodyDef;
-
-  //create ground
   bodyDef.type = b2Body.b2_staticBody;
-  bodyDef.position.Set(0, (this.bottom + 32) * pf);
+  bodyDef.position.Set((this.right + this.left) / 2, (this.bottom + this.border / 2) * pf);
   fixDef.shape = new b2PolygonShape;
-  fixDef.shape.SetAsBox((this.right - this.left) * pf, 32 * pf);
+  fixDef.shape.SetAsBox((this.right - this.left + this.border / 2) * pf, this.border / 2 * pf);
+  this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
+
+  // bottom
+  var fixDef = new b2FixtureDef;
+  fixDef.density = 1.0;
+  fixDef.friction = 0.5;
+  fixDef.restitution = 0.2;
+  var bodyDef = new b2BodyDef;
+  bodyDef.type = b2Body.b2_staticBody;
+  bodyDef.position.Set((this.right + this.left) / 2, (this.top - this.border / 2) * pf);
+  fixDef.shape = new b2PolygonShape;
+  fixDef.shape.SetAsBox((this.right - this.left + this.border / 2) * pf, this.border / 2 * pf);
+  this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
+
+  // right
+  var fixDef = new b2FixtureDef;
+  fixDef.density = 1.0;
+  fixDef.friction = 0.5;
+  fixDef.restitution = 0.2;
+  var bodyDef = new b2BodyDef;
+  bodyDef.type = b2Body.b2_staticBody;
+  bodyDef.position.Set((this.right + this.border / 2) * pf, (this.top - this.border / 2) * pf);
+  fixDef.shape = new b2PolygonShape;
+  fixDef.shape.SetAsBox(this.border / 2 * pf, (this.bottom - this.top) * pf);
+  this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
+
+  // left
+  var fixDef = new b2FixtureDef;
+  fixDef.density = 1.0;
+  fixDef.friction = 0.5;
+  fixDef.restitution = 0.2;
+  var bodyDef = new b2BodyDef;
+  bodyDef.type = b2Body.b2_staticBody;
+  bodyDef.position.Set((this.left - this.border / 2) * pf, (this.top - this.border / 2) * pf);
+  fixDef.shape = new b2PolygonShape;
+  fixDef.shape.SetAsBox(this.border / 2 * pf, (this.bottom - this.top) * pf);
   this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
 
 
