@@ -2,18 +2,19 @@ var ballSize = 32;
 
 function Ball() {
   //this.phys =
-  this.x = 0;
+  this.x = 50;
   this.y = 0;
+  this.type = 'ball';
 
-  var fixture = new b2FixtureDef;
-  fixture.density = 1.0;
-  fixture.friction = 0.01;
-  fixture.restitution = 0.8;
+  this.fixture = new b2FixtureDef;
+  this.fixture.density = 1.0;
+  this.fixture.friction = 0.01;
+  this.fixture.restitution = 0.8;
 
   this.box = new b2BodyDef();
 
-  fixture.shape = new b2CircleShape;
-  fixture.shape.m_radius = ballSize / 2 * pf;
+  this.fixture.shape = new b2CircleShape;
+  this.fixture.shape.m_radius = ballSize / 2 * pf;
   // fixture.shape = new b2PolygonShape;
   // fixture.shape.SetAsBox(ballSize / 2 * pf, ballSize / 2 * pf);
   this.box.position.x = this.x * pf;
@@ -21,17 +22,27 @@ function Ball() {
   this.box.type = b2Body.b2_dynamicBody;
 
   this.phys = world.phys.CreateBody(this.box);
-  this.phys.CreateFixture(fixture);
+  this.phys.CreateFixture(this.fixture);
+
+  this.phys.link = this;
+
+  this.player;
 }
 
 Ball.prototype.update = function() {
-
+  if (this.player) {
+    this.phys.SetPosition(new b2Vec2(this.player.x * pf, this.player.y * pf));
+    this.phys.SetLinearVelocity(new b2Vec2(0, 0));
+  }
 }
 
 Ball.prototype.render = function() {
   ctx.save();
 
   var pos = this.phys.GetPosition();
+  if (this.player) {
+    pos = this.player.phys.GetPosition();
+  }
   var rot = this.phys.GetAngle();
 
   this.x = pos.x / pf;
@@ -52,6 +63,13 @@ Ball.prototype.render = function() {
   // }
 
   ctx.restore();
+}
+
+Ball.prototype.grab = function(player) {
+  if (this.player) return;
+
+  this.player = player;
+  this.disabled = true;
 }
 
 var ball = new Ball();

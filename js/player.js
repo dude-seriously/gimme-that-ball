@@ -13,6 +13,7 @@ var lobbyPlayers = jQuery('#lobby-players');
 
 function Player(ind) {
   this.id = ++playerIDs;
+  this.type = 'player';
   this.ind = ind;
   this.team = null;
   this.gamePad = null;
@@ -36,8 +37,21 @@ function Player(ind) {
 
   this.tpl();
   this.phys = world.phys.CreateBody(this.box);
-
   this.phys.CreateFixture(fixDef);
+
+  this.phys.link = this;
+  // console.log(this.phys.setContactListener)
+}
+
+Player.prototype.collide = function(contact) {
+  var body = contact.m_fixtureB.m_body;
+  var link = body.link;
+
+  if (link) {
+    if (link.type == 'ball') {
+      link.grab(this);
+    }
+  }
 }
 
 Player.prototype.update = function() {

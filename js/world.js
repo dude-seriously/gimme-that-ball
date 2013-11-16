@@ -26,6 +26,21 @@ function World() {
   fixDef.shape = new b2PolygonShape;
   fixDef.shape.SetAsBox((this.right - this.left) * pf, 32 * pf);
   this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
+
+
+  this.contactListener = new Box2D.Dynamics.b2ContactListener;
+  this.contactListener.BeginContact = function(contact, manifold) {
+     if (contact.m_fixtureA.m_body.link && contact.m_fixtureA.m_body.link.collide) {
+        contact.m_fixtureA.m_body.link.collide(contact);
+     }
+  };
+  this.contactListener.PreSolve = function(contact, oldManifold) {
+    if ((contact.m_fixtureA.m_body.link && contact.m_fixtureA.m_body.link.disabled) ||
+        (contact.m_fixtureB.m_body.link && contact.m_fixtureB.m_body.link.disabled)) {
+      contact.SetEnabled(false);
+    }
+  }
+  this.phys.SetContactListener(this.contactListener);
 }
 
 World.prototype.addProp = function(opt) {
