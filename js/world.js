@@ -73,8 +73,14 @@ function World() {
      }
   };
   this.contactListener.PreSolve = function(contact, oldManifold) {
-    if ((contact.m_fixtureA.m_body.link && contact.m_fixtureA.m_body.link.disabled) ||
-        (contact.m_fixtureB.m_body.link && contact.m_fixtureB.m_body.link.disabled)) {
+    var a = contact.m_fixtureA.m_body.link;
+    var b = contact.m_fixtureB.m_body.link;
+
+    if ((a && a.disabled) || (b && b.disabled)) {
+      contact.SetEnabled(false);
+    } else if (a && a.type == 'ball' && b && b.type == 'player' && b.cantGrab) {
+      contact.SetEnabled(false);
+    } else if (a && a.type == 'player' && a.cantGrab && b && b.type == 'ball') {
       contact.SetEnabled(false);
     }
   }

@@ -9,7 +9,7 @@ var propTypes = {
     color: "#880015",
     upd: function() {
 
-    	this.phys.SetAngle(Math.sin(this.step/20));
+    	this.phys.SetAngle(Math.sin(step/20));
     }
   },
   'big seesaw': {
@@ -22,7 +22,7 @@ var propTypes = {
     color: "#69002b",
     upd: function() {
 
-    	this.phys.SetAngle(Math.sin(this.step/30));
+    	this.phys.SetAngle(Math.sin(step/30));
     }
   },
   'spinner': {
@@ -34,7 +34,7 @@ var propTypes = {
     image: '',
     color: "#ddd",
     upd: function() {
-    	this.phys.SetAngle(Math.cos(this.step/100)*7);
+    	this.phys.SetAngle(Math.cos(step/100)*7);
     }
   },
   'boomerang': {
@@ -47,8 +47,8 @@ var propTypes = {
     color: "#b97a57",
     upd: function() {
 
-    	this.phys.SetAngle(Math.cos(this.step/100)*7);
-    	this.phys.SetPosition(new b2Vec2(this.original_x + Math.cos(this.step/100) * 2, this.original_y));
+    	this.phys.SetAngle(Math.cos(step/100)*7);
+    	this.phys.SetPosition(new b2Vec2(this.original_x + Math.cos(step/100) * 2, this.original_y));
     }
   },
   'platform': {
@@ -72,8 +72,6 @@ function Prop(opt) {
   this.height = opt.height;
 
   this.color = opt.color;
-
-  this.step = 0;
 
   if (opt.upd) {
     this.upd = opt.upd;
@@ -109,7 +107,6 @@ function Prop(opt) {
 }
 
 Prop.prototype.update = function() {
-  this.step++;
   if (this.upd) this.upd.call(this);
 }
 

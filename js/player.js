@@ -1,7 +1,9 @@
 var playerIDs = 0;
 var moveSpeed = 2;
 var jumpFactor = 6;
-var dashFactor = 4;
+var dashFactor = 5;
+var cantGrabThrowDelay = 500;
+var cantGrabKickDelay = 1000;
 
 var playerImage = new Image();
 var playerImageJump = new Image();
@@ -29,6 +31,9 @@ function Player(ind) {
   this.ready = false;
   this.jumping = false;
   this.dashing = false;
+
+  this.cantGrabLast = 0;
+  this.cantGrab = false;
 
   this.last_dash = 0;
   this.last_jump = 0;
@@ -66,8 +71,23 @@ Player.prototype.collide = function(contact) {
   var link = body.link;
 
   if (link) {
-    if (link.type == 'ball') {
+    if (link.type == 'ball' && ! this.cantGrab) {
       link.grab(this);
+    } else if (link.type == 'player') {
+      if (link.team !== this.team && (ball.player == link || ball.player == this)) {
+        var damager = ball.player == this ? link : this;
+
+        if (damager.phys.GetLinearVelocity().Length() > ball.player.phys.GetLinearVelocity().Length()) {
+          var hit = this.phys.GetLinearVelocity().Copy();
+          hit.Subtract(link.phys.GetLinearVelocity());
+          hit = hit.Length();
+
+          if (hit > 4) {
+            var vel = damager.phys.GetLinearVelocity().Copy();
+            ball.drop(vel);
+          }
+        }
+      }
     }
   }
 }
@@ -75,6 +95,10 @@ Player.prototype.collide = function(contact) {
 Player.prototype.update = function() {
   if (this.energy < maxEnergy) {
     this.energy++;
+  }
+
+  if (this.cantGrab && this.cantGrabLast < now) {
+    this.cantGrab = false;
   }
 
   if (this.gamePad) {
@@ -199,6 +223,11 @@ Player.prototype.render = function() {
       var img = (this.jumping) ? playerImageJump : playerImage;
     } else {
       var img = (this.jumping) ? playerBImageJump : playerBImage;
+    }
+
+
+    if (this.cantGrab && now % 200 > 100) {
+      ctx.globalAlpha = .1;
     }
 
     ctx.scale(this.moveLeft ? -1 : 1, 1);

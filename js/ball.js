@@ -43,16 +43,7 @@ Ball.prototype.update = function() {
       vel.x += playerVelocity.x * .3;
       vel.y += playerVelocity.y * .3;
 
-      var posOff = vel.Copy();
-      posOff.Normalize();
-      posOff.Multiply(32);
-
-      this.phys.SetPosition(new b2Vec2((this.player.x + posOff.x * .6) * pf, ((this.player.y + posOff.y) * pf)));
-      this.phys.SetLinearVelocity(vel);
-      // this.phys.SetLinearVelocity(new b2Vec2((Math.random() * 2 - 1.0) * ballThrowPower, (Math.random() * 2 - 1.0) * ballThrowPower));
-
-      this.disabled = false;
-      this.player = null;
+      this.drop(vel);
     } else {
       this.phys.SetPosition(new b2Vec2(this.player.x * pf, this.player.y * pf));
       this.phys.SetLinearVelocity(new b2Vec2(0, 0));
@@ -86,6 +77,24 @@ Ball.prototype.grab = function(player) {
 
   this.player = player;
   this.disabled = true;
+}
+
+Ball.prototype.drop = function(vel) {
+  if (! this.player) return;
+
+  var posOff = vel.Copy();
+  posOff.Normalize();
+  posOff.Multiply(32);
+
+  this.phys.SetPosition(new b2Vec2((this.player.x + posOff.x * .6) * pf, ((this.player.y + posOff.y) * pf)));
+  this.phys.SetLinearVelocity(vel);
+  // this.phys.SetLinearVelocity(new b2Vec2((Math.random() * 2 - 1.0) * ballThrowPower, (Math.random() * 2 - 1.0) * ballThrowPower));
+
+  this.player.cantGrab = true;
+  this.player.cantGrabLast = now + cantGrabThrowDelay;
+
+  this.disabled = false;
+  this.player = null;
 }
 
 var ball = new Ball();

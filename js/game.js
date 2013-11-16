@@ -1,3 +1,6 @@
+var now = Date.now();
+var step = 0;
+
 function Game() {
   this.pads = { };
   this.state = 'lobby';
@@ -35,6 +38,8 @@ Game.prototype.init = function() {
 
 Game.prototype.loop = function() {
   requestAnimFrame(this.loop.bind(this));
+  now = Date.now();
+  step++;
 
   var pads = Gamepad.getStates();
   var i = pads.length;
