@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>Dude, Srsly, Gimme That Ball!</title>
+  <link href="./css/core.css" rel="stylesheet" />
+</head>
+<body>
+  <div id='ruler'></div>
+  <canvas id='game'></canvas>
+  <div id="message"></div>
+
+  <div id='overlay' class='active'></div>
+
+  <div class='modal active' id='lobby'>
+    <h1>Dude, Srsly, Gimme That Ball!</h1>
+    <h2>Lobby</h2>
+    <div class='side side-left'>&lt;</div>
+    <div class='side side-right'>&gt;</div>
+    <div id='lobby-team-a' class='teams team-a'></div>
+    <div id='lobby-players' class='lobby'></div>
+    <div id='lobby-team-b' class='teams team-b'></div>
+  </div>
+
+  <div id='score'>
+    <div id='score-a' class='score'>0</div>
+    <span class='dash'>-</span>
+    <div id='score-b' class='score'>0</div>
+  </div>
+
+
+  <script src='./js/jquery-2.0.3.js'></script>
+  <script src='./js/jquery-color.js'></script>
+
+
+  <script type="text/javascript" src="./js/box2d/Box2dWeb-2.1.a.3.min.js"></script>
+  <script>
+  var b2Vec2 = Box2D.Common.Math.b2Vec2
+  , b2BodyDef = Box2D.Dynamics.b2BodyDef
+  , b2Body = Box2D.Dynamics.b2Body
+  , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
+  , b2Fixture = Box2D.Dynamics.b2Fixture
+  , b2World = Box2D.Dynamics.b2World
+  , b2MassData = Box2D.Collision.Shapes.b2MassData
+  , b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+  , b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
+  , b2DebugDraw = Box2D.Dynamics.b2DebugDraw
+    ;
+  </script>
+
+  <script type='text/javascript' src="./js/events.js"></script>
+  <script type='text/javascript' src="./js/collection.js"></script>
+  <script type='text/javascript' src="./js/vec2.js"></script>
+  <script type='text/javascript' src="./js/core.js"></script>
+  <script type='text/javascript' src="./js/camera.js"></script>
+  <script type='text/javascript' src="./js/world.js"></script>
+  <script type='text/javascript' src="./js/player.js"></script>
+  <script type='text/javascript' src="./js/players.js"></script>
+  <script type='text/javascript' src="./js/gate.js"></script>
+  <script type='text/javascript' src="./js/team.js"></script>
+  <script type='text/javascript' src="./js/teams.js"></script>
+  <script type='text/javascript' src="./js/gamepad.js"></script>
+  <script type='text/javascript' src="./js/prop.js"></script>
+  <script type='text/javascript' src="./js/ball.js"></script>
+  <script type='text/javascript' src="./js/speech-bubble.js"></script>
+  <script type='text/javascript' src="./js/game.js"></script>
+</body>
+</html>
