@@ -4,14 +4,25 @@ function World() {
   this.border = 32;
   this.left = -1500;
   this.right = 1500;
-  this.top = -512;
-  this.bottom = 256;
+  this.top = -400;
+  this.bottom = 400;
   this.gravityStr = 15;
 
   this.width = this.right - this.left;
   this.height = this.bottom - this.top;
 
   this.props = new Collection();
+
+  var pointStep = 128;
+  var total = Math.floor(this.width / pointStep);
+
+  this.points = [ ];
+  for(var i = 0; i < total; i++) {
+    var x = (this.left + pointStep * i + (i !== 0 ? Math.random() * 64 - 32 : 0)) * pf;
+    var y = (this.bottom - Math.random() * 100 - (i == 0 ? 100 : 0)) * pf;
+    this.points.push(new b2Vec2(x, y));
+  }
+  this.points.push(new b2Vec2(this.right * pf, (this.bottom - Math.random() * 100 - 100) * pf));
 
   // box2d
   this.gravity = new b2Vec2(0, 15);
@@ -23,16 +34,35 @@ function World() {
 
 
   // bottom
-  var fixDef = new b2FixtureDef;
-  fixDef.density = 1.0;
-  fixDef.friction = 0.5;
-  fixDef.restitution = 0.2;
-  var bodyDef = new b2BodyDef;
-  bodyDef.type = b2Body.b2_staticBody;
-  bodyDef.position.Set((this.right + this.left) / 2, (this.bottom + this.border / 2) * pf);
-  fixDef.shape = new b2PolygonShape;
-  fixDef.shape.SetAsBox((this.right - this.left + this.border / 2) * pf, this.border / 2 * pf);
-  this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
+  // var fixDef = new b2FixtureDef;
+  // fixDef.density = 1.0;
+  // fixDef.friction = 0.5;
+  // fixDef.restitution = 0.2;
+  // var bodyDef = new b2BodyDef;
+  // bodyDef.type = b2Body.b2_staticBody;
+  // bodyDef.position.Set((this.right + this.left) / 2, (this.bottom + this.border / 2) * pf);
+  // fixDef.shape = new b2PolygonShape;
+  // fixDef.shape.SetAsBox((this.right - this.left + this.border / 2) * pf, this.border / 2 * pf);
+  // this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
+
+  for(var i = 0; i < this.points.length - 1; i++) {
+    var fixDef = new b2FixtureDef;
+    fixDef.density = 1.0;
+    fixDef.friction = 0.5;
+    fixDef.restitution = 0.2;
+    var bodyDef = new b2BodyDef;
+    bodyDef.type = b2Body.b2_staticBody;
+    bodyDef.position.Set(0, 0);
+    fixDef.shape = new b2PolygonShape;
+    var vectors = [
+      new b2Vec2(this.points[i].x, this.points[i].y),
+      new b2Vec2(this.points[i + 1].x, this.points[i + 1].y),
+      new b2Vec2(this.points[i + 1].x, this.bottom * pf),
+      new b2Vec2(this.points[i].x, this.bottom * pf)
+    ];
+    fixDef.shape.SetAsArray(vectors, vectors.length);
+    this.phys.CreateBody(bodyDef).CreateFixture(fixDef);
+  }
 
   // bottom
   var fixDef = new b2FixtureDef;
@@ -121,15 +151,26 @@ World.prototype.update = function() {
 }
 
 World.prototype.render = function() {
+  ctx.save();
+
   ctx.beginPath();
   ctx.moveTo(this.left, this.top);
+  // ctx.lineTo(this.left, this.bottom);
+
+  for(var i = 0; i < this.points.length; i++) {
+    ctx.lineTo(this.points[i].x / pf, this.points[i].y / pf);
+  }
+
+  // ctx.lineTo(this.right, this.bottom);
   ctx.lineTo(this.right, this.top);
-  ctx.lineTo(this.right, this.bottom);
-  ctx.lineTo(this.left, this.bottom);
   ctx.lineTo(this.left, this.top);
+
+  ctx.lineWidth = 2;
 
   ctx.strokeStyle = '#000';
   ctx.stroke();
+
+  ctx.restore();
 
   this.props.forEach(function(prop) {
     prop.render();

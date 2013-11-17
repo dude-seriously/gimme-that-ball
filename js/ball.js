@@ -27,6 +27,7 @@ function Ball() {
 
   this.phys = world.phys.CreateBody(this.box);
   this.phys.CreateFixture(this.fixture);
+  this.phys.SetLinearVelocity(new b2Vec2(0, -10));
 
   this.phys.link = this;
 

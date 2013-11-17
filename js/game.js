@@ -12,46 +12,49 @@ Game.prototype.init = function() {
   teams.init();
   this.loop();
 
-  var i = 20;
+  var i = 30;
   while(i--) {
     if (i == 19) {
       var type = propTypes['boomerang'];
-      type.x =  Math.random() * world.width + world.left;
-      type.y = Math.random() * (world.height-100) + world.top;
+      type.x =  Math.random() * (world.width - 400) + world.left + 200;
+      type.y = Math.random() * (world.height-200) + world.top + 100;
       world.addProp(type);
     }else if (i == 18) {
       var type = propTypes['spinner'];
-      type.x =  Math.random() * world.width + world.left;
-      type.y = Math.random() * (world.height-100) + world.top;
+      type.x =  Math.random() * (world.width - 400) + world.left + 200;
+      type.y = Math.random() * (world.height-200) + world.top + 100;
       world.addProp(type);
     } else if (i == 17) {
       world.addProp(propTypes['big seesaw']);
-    } else if (i%3 == 0) {
+    } else if (i%4 == 0) {
       var type = propTypes['hovering platform'];
-      type.x =  Math.random() * world.width + world.left;
-      type.y = Math.random() * (world.height-100) + world.top;
+      type.x =  Math.random() * (world.width - 400) + world.left + 200;
+      type.y = Math.random() * (world.height-300) + world.top + 100;
+      type.width = Math.floor(Math.random() * 200 + 100);
       world.addProp(type);
-    } else if (i%5 == 0) {
+    } else if (i%6 == 0) {
       var type = propTypes['vertical platform'];
-      type.x =  Math.random() * world.width + world.left;
-      type.y = -100 + Math.random() * (world.height-100) + world.top;
-      world.addProp(type);
-    } else if (i%11 == 0) {
-      var size = Math.random() * 200 + 100
-      world.addProp({
-        width: size,
-        height: size,
-        fixed: true,
-        color: "#111111",
-        x: Math.random() * world.width + world.left,
-        y: world.height + world.top - size/2
-      });
+      type.x =  Math.random() * (world.width - 200) + world.left + 100;
+      type.y = -100 + Math.random() * (world.height-500) + world.top + 300;
+      type.height = Math.floor(Math.random() * 200 + 50);
+    //   world.addProp(type);
+    // } else if (i%11 == 0) {
+    //   // huge box
+    //   var size = Math.random() * 140 + 80
+    //   world.addProp({
+    //     width: size,
+    //     height: size,
+    //     fixed: true,
+    //     color: "#111111",
+    //     x: Math.random() * (world.width - 800) + (world.left + 400),
+    //     y: world.height + world.top - size/2
+    //   });
     } else {
-      var size = Math.random() * 80 + 20
+      var size = Math.random() * 40 + 20
       world.addProp({
         width: size,
         height: size,
-        x: Math.random() * world.width + world.left,
+        x: Math.random() * (world.width * .5) + (world.left + world.width * .25),
         y: Math.random() * world.height + world.top
       });
     }
@@ -79,8 +82,8 @@ Game.prototype.loop = function() {
           gamePadMaster = pads[i];
         }
 
-        // player.gamePad.leftStickX = (i % 2) * 2 - 1;
-        // player.gamePad.start = true;
+        player.gamePad.leftStickX = (i % 2) * 2 - 1;
+        player.gamePad.start = true;
       }
     }
   }
@@ -124,7 +127,7 @@ function changeGravity() {
     case 4:
     case 5:
       world.gravity_shift = 1;
-      SetGravity(15, Math.random() * 15 - 7, 15);
+      SetGravity(15, Math.random() * 8 - 4, 15);
       msg = "It's unfair!"
     break;
     case 6:

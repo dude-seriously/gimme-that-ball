@@ -9,6 +9,10 @@ function Team(id, name) {
 Team.prototype.join = function(player) {
   this.players.push(player);
   player.team = this;
+
+  var pos = player.phys.GetPosition();
+  pos.x = this.id == 0 ? (world.left + 128) * pf : (world.right - 128) * pf;
+  player.phys.SetPosition(pos);
 }
 
 Team.prototype.leave = function(player) {

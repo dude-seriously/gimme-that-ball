@@ -133,7 +133,7 @@ Player.prototype.update = function() {
             }
           }
         }
-        if (! this.ready && this.gamePad.start && this.team) {
+        if (! this.ready && (this.gamePad.start || this.gamePad.faceButtom0) && this.team) {
           this.ready = true;
           this.div.addClass('ready');
           players.checkReady();
@@ -218,7 +218,7 @@ Player.prototype.update = function() {
 }
 
 Player.prototype.makeASpeech = function(type, force) {
-  if ((! this.speeched && this.nextSpeech < now) || force) {
+  if (((! this.speeched && this.nextSpeech < now) || force) &&  (Math.floor(Math.random() * 3) % 3 == 1)) {
     this.nextRandomSpeech = Math.floor(now + 5000 + Math.random() * 5000);
     this.nextSpeech = now + Math.floor(Math.random() * randomSpeechDelay + randomSpeechDelay * .5);
     this.speeched = true;

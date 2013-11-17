@@ -16,7 +16,7 @@ var propTypes = {
     }
   },
   'big seesaw': {
-  	x: 150,
+  	x: 0,
   	y: 50,
     width: 450,
     height: 40,
@@ -97,7 +97,7 @@ function Prop(opt) {
 
   this.color = opt.color;
 
-  this.step = 0;
+  this.step = Math.floor(Math.random() * 1024);
 
   if (opt.upd) {
     this.upd = opt.upd;
@@ -150,9 +150,9 @@ Prop.prototype.render = function() {
   	ctx.drawImage(boxImage, -this.width / 2, -this.height / 2, this.width, this.height);
   } else {
   	ctx.beginPath();
-	ctx.fillStyle = this.color || '#06f';
-	ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
-	ctx.fill();
+  	ctx.fillStyle = this.color || '#06f';
+  	ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+  	ctx.fill();
   }
 
   ctx.restore();
