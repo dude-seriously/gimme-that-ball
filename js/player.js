@@ -163,7 +163,7 @@ Player.prototype.update = function() {
             var vel = this.phys.GetLinearVelocity();
 
             var impulse = this.phys.GetMass() * jumpFactor;
-            this.phys.ApplyImpulse(new b2Vec2(0,-impulse), this.phys.GetWorldCenter());
+            this.phys.ApplyImpulse(new b2Vec2(0,-impulse * world.gravity_shift), this.phys.GetWorldCenter());
           }
 
         } else {

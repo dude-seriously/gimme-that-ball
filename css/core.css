@@ -17,3 +17,16 @@ body{margin:0;background:#323232;color:#fff;font-family:Helvetica,sans-serif;ove
 #score{position:absolute;top:0;left:50%;width:256px;margin:0 0 0 -128px;font-size:96px;cursor:default}#score>.dash{float:left;width:32px;text-align:center;opacity:.2}
 #score>.score{float:left;width:112px}#score>.score#score-a{text-align:right;color:#f60}
 #score>.score#score-b{color:#06f}
+#message {
+  position: absolute;
+line-height: 100%;
+font-size: 72px;
+width: 100%;
+text-align: center;
+top: 50%;
+margin-top: -50px;
+height: 100px;
+text-transform: uppercase;
+text-weight: 200;
+
+}

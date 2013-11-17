@@ -115,3 +115,19 @@ Game.prototype.loop = function() {
 
 var game = new Game();
 game.init();
+
+function changeGravity() {
+  $("#message").text("Gravity Shift!").fadeIn(1000).fadeOut(2000);
+  world.gravity_shift = -1;
+  world.phys.SetGravity(new b2Vec2(0, -15))
+  setTimeout(normalGravity, 10000);
+}
+
+function normalGravity() {
+  $("#message").text("Back to normal!").fadeIn(1000).fadeOut(2000);
+  world.gravity_shift = 1;
+  world.phys.SetGravity(new b2Vec2(0, 15))
+  setTimeout(changeGravity, 10000);
+}
+
+setTimeout(changeGravity, 10000);
