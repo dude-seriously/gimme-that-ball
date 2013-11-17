@@ -112,7 +112,7 @@ game.init();
 
 function changeGravity() {
   var msg;
-  switch (Math.ceil(Math.random()*6)) {
+  switch (Math.ceil(Math.random()*9)) {
     case 1:
       world.gravity_shift = -1;
       SetGravity(15, Math.random() * 2 - 1, -15);
@@ -121,22 +121,40 @@ function changeGravity() {
     case 2:
       world.gravity_shift = 1;
       SetGravity(5, 0, 15);
-      msg = "Moon gravity"
+      msg = "Moon gravity";
+      var target_color = "#111111";
     break;
     case 3:
     case 4:
     case 5:
+    case 9:
       world.gravity_shift = 1;
       SetGravity(15, Math.random() * 8 - 4, 15);
-      msg = "It's unfair!"
+      msg = "Let's make it less fair..."
+      var target_color = "#503838";
+
     break;
     case 6:
       world.gravity_shift = 1;
       SetGravity(50, 0, 50);
       msg = "Super magnet"
+      var target_color = "#503838";
+    break;
+    case 7:
+      controllerFlip = -1;
+      msg = "Reversed controller!"
+      var target_color = "#5c4c65";
+    break;
+    case 8:
+      pointFlip = -1;
+      msg = "NEGATIVE POINTS!";
+      var target_color = "#526251";
     break;
   }
   $("#message").text(msg).fadeIn(1000).fadeOut(2000);
+  if (typeof target_color != "undefined") {
+    $("body").animate({backgroundColor: target_color})
+  }
   setTimeout(normalGravity, 10000 + Math.floor(Math.random() * 10000));
 }
 
@@ -151,6 +169,9 @@ function normalGravity() {
   world.gravity_shift = 1;
   SetGravity(15, 0, 15);
   setTimeout(changeGravity, 10000 + Math.floor(Math.random() * 10000));
+  controllerFlip = 1;
+  pointFlip = 1;
+  $("body").animate({backgroundColor: '#323232'})
 }
 
 setTimeout(changeGravity, 10000 + Math.floor(Math.random() * 10000));

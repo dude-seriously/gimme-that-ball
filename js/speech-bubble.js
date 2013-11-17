@@ -7,7 +7,12 @@ SpeechBubbleQuotes = {
     "Why you...",
     "Pfffff",
     ">_<",
-    "Argh, get him!"
+    "Argh, get him!",
+    "ಠ_ಠ",
+    "So close...",
+    "Give me that back!",
+    "Hey!",
+    "I don't need it anyway..."
   ],
 
   "got ball": [
@@ -17,9 +22,30 @@ SpeechBubbleQuotes = {
     "lol noob",
     "Go go go go",
     "OM NOM NOM NOM",
-    "I'll take this",
+    "I'll take that",
     "Kiss my pixel",
-    "CAN I HAZ BALL KTHX"
+    "CAN I HAZ BALL KTHX",
+    "noob",
+    "Got it",
+    "^_^",
+    "Yes yes yes",
+    "Oh what's this thing?",
+    "What do we have here?",
+    "I'll borrow this",
+    "Hello ball, I've missed you",
+    "Get in!",
+    "Woohoo!",
+    "Oh yeah!",
+    "That's what I'm talking about",
+    "Boom, got it",
+    "It's mine! My precious!",
+    "Ooh, shiny!",
+    "Mmmmm, so round",
+    "Fus-ro-dah!",
+    "See ya!",
+    "Hurr hurr hurr",
+    "Give that to me",
+    "Ball. Mine."
   ],
 
   "random happy": [
@@ -29,7 +55,12 @@ SpeechBubbleQuotes = {
     "Hehe, so easy",
     "This is what WINNING looks like",
     "U MAD BRO?",
-    "Can't touch this"
+    "Can't touch this",
+    ":)",
+    "We're unstoppable",
+    "Just give up already",
+    "Resistance is futile",
+    "Come on losers!"
   ],
 
   "random sad": [
@@ -38,7 +69,18 @@ SpeechBubbleQuotes = {
     "Argh come on..",
     "Dude, focus",
     "I'm tired...",
-    "I want to go home..."
+    "I want to go home...",
+    "We need to try harder",
+    "Put more effort into it!",
+    ":(",
+    "Dude, srsly...",
+    "Just.. get the ball",
+    "Blah blah blah",
+    "Do it! Do it!",
+    "Pass it to me!",
+    "Stupid ball... Stupid game..",
+    "You shall not pass!",
+    "Make your mom proud"
   ],
 
   "random": [
@@ -46,7 +88,8 @@ SpeechBubbleQuotes = {
     "What are we fighting for anyway?",
     "Why is the ball so pixelated?",
     "I say, what a pleasent weather",
-    "Are we there yet?"
+    "Are we there yet?",
+    "What's the time?"
   ]
 }
 

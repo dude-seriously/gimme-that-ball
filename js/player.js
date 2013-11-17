@@ -5,6 +5,7 @@ var dashFactor = 5;
 var cantGrabThrowDelay = 500;
 var cantGrabKickDelay = 1000;
 var randomSpeechDelay = 500;
+var controllerFlip = 1;
 
 var playerImage = new Image();
 var playerImageJump = new Image();
@@ -14,6 +15,21 @@ var playerBImage = new Image();
 var playerBImageJump = new Image();
 playerBImage.src = "./img/playerb.png";
 playerBImageJump.src = "./img/playerb_jump.png";
+
+var hats = [];
+
+for (var i = 0; i < 6; i++) {
+  hats[i] = new Image(0);
+  hats[i].src = "./img/hat" + (i+1) + ".png";
+}
+
+function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
+hats = shuffle(hats);
+
 
 var playerHeight = 60;
 var playerWidth = 36;
@@ -148,8 +164,8 @@ Player.prototype.update = function() {
 
           var currMaxSpeed = (ball.player == this) ? maxSpeed * 0.8 : maxSpeed;
 
-          if ( (this.gamePad.leftStickX < 0 && vel.x > -currMaxSpeed) || (this.gamePad.leftStickX > 0 && vel.x < currMaxSpeed) ) {
-            this.phys.ApplyForce(new b2Vec2(this.gamePad.leftStickX * moveSpeed * 10,0),this.phys.GetWorldCenter())
+          if ( (this.gamePad.leftStickX*controllerFlip < 0 && vel.x > -currMaxSpeed) || (this.gamePad.leftStickX*controllerFlip > 0 && vel.x < currMaxSpeed) ) {
+            this.phys.ApplyForce(new b2Vec2(this.gamePad.leftStickX*controllerFlip * moveSpeed * 10,0),this.phys.GetWorldCenter())
           }
 
         }
@@ -278,6 +294,7 @@ Player.prototype.render = function() {
 
     ctx.scale(this.moveLeft ? -1 : 1, 1);
     ctx.drawImage(img, -(playerWidth/2), -(playerHeight/2));
+    ctx.drawImage(hats[this.id-1], -(playerWidth/2), -playerHeight*1.5);
 
     ctx.restore();
   }
