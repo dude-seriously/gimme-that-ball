@@ -47,7 +47,7 @@ Game.prototype.init = function() {
         y: world.height + world.top - size/2
       });
     } else {
-      var size = Math.random() * 50 + 70
+      var size = Math.random() * 80 + 20
       world.addProp({
         width: size,
         height: size,

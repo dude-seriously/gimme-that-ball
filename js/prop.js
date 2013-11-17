@@ -1,3 +1,6 @@
+var boxImage = new Image();
+boxImage.src = "./img/box1.png";
+
 var propTypes = {
   'seesaw': {
   	x: 150,
@@ -143,10 +146,14 @@ Prop.prototype.render = function() {
   ctx.translate(pos.x / pf, pos.y / pf);
   ctx.rotate(rot);
 
-  ctx.beginPath();
-  ctx.fillStyle = this.color || '#06f';
-  ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
-  ctx.fill();
+  if (this.width == this.height) {
+  	ctx.drawImage(boxImage, -this.width / 2, -this.height / 2, this.width, this.height);
+  } else {
+  	ctx.beginPath();
+	ctx.fillStyle = this.color || '#06f';
+	ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+	ctx.fill();
+  }
 
   ctx.restore();
 }
