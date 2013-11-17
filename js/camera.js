@@ -56,7 +56,6 @@ Camera.prototype.update = function() {
   this.target[1] -= 64;
 
   if (this.shaking > 0) {
-    console.log(this.shaking);
     this.target[0] += (Math.min(10, this.shaking) / 10) * (Math.random() * shakeStr * 2 - shakeStr);
     this.target[1] += (Math.min(10, this.shaking) / 10) * (Math.random() * shakeStr * 2 - shakeStr);
     --this.shaking;

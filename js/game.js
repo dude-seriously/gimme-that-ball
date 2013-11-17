@@ -79,8 +79,8 @@ Game.prototype.loop = function() {
           gamePadMaster = pads[i];
         }
 
-        player.gamePad.leftStickX = (i % 2) * 2 - 1;
-        player.gamePad.start = true;
+        // player.gamePad.leftStickX = (i % 2) * 2 - 1;
+        // player.gamePad.start = true;
       }
     }
   }
@@ -109,7 +109,7 @@ game.init();
 
 function changeGravity() {
   var msg;
-  switch (Math.ceil(Math.random()*4)) {
+  switch (Math.ceil(Math.random()*6)) {
     case 1:
       world.gravity_shift = -1;
       SetGravity(15, Math.random() * 2 - 1, -15);
@@ -121,18 +121,20 @@ function changeGravity() {
       msg = "Moon gravity"
     break;
     case 3:
+    case 4:
+    case 5:
       world.gravity_shift = 1;
       SetGravity(15, Math.random() * 15 - 7, 15);
       msg = "It's unfair!"
     break;
-    case 4:
+    case 6:
       world.gravity_shift = 1;
       SetGravity(50, 0, 50);
       msg = "Super magnet"
     break;
   }
   $("#message").text(msg).fadeIn(1000).fadeOut(2000);
-  setTimeout(normalGravity, 5000);
+  setTimeout(normalGravity, 10000 + Math.floor(Math.random() * 10000));
 }
 
 function SetGravity(str, x, y) {
@@ -145,7 +147,7 @@ function normalGravity() {
   $("#message").text("Back to normal!").fadeIn(1000).fadeOut(2000);
   world.gravity_shift = 1;
   SetGravity(15, 0, 15);
-  setTimeout(changeGravity, 5000);
+  setTimeout(changeGravity, 10000 + Math.floor(Math.random() * 10000));
 }
 
-setTimeout(changeGravity, 5000);
+setTimeout(changeGravity, 10000 + Math.floor(Math.random() * 10000));
