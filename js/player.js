@@ -91,6 +91,8 @@ Player.prototype.collide = function(contact) {
             var vel = damager.phys.GetLinearVelocity().Copy();
             ball.player.makeASpeech('hit');
             ball.drop(vel);
+
+            camera.shaking = Math.floor(Math.random() * 10 + 5);
           }
         }
       }

@@ -110,7 +110,9 @@ World.prototype.update = function() {
   this.gravityR.Normalize();
   this.gravityR.Multiply(this.gravityStr);
 
-  this.phys.SetGravity(this.gravityR);
+  if (step % 5 == 1) {
+    this.phys.SetGravity(this.gravityR);
+  }
   this.angle = Math.atan2(this.gravityR.y, this.gravityR.x) - Math.PI / 2;
 
   this.props.forEach(function(prop) {

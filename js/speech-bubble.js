@@ -92,6 +92,11 @@ Bubble.prototype.update = function() {
 Bubble.prototype.render = function() {
   ctx.save();
 
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.scale(camera.zoom, camera.zoom);
+  ctx.translate(-camera.pos[0], -camera.pos[1] / 2);
+
   ctx.beginPath();
 
   ctx.font = 'bold 24px Arial';
@@ -121,9 +126,6 @@ Bubble.prototype.render = function() {
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#000';
   ctx.fillText(this.text, x + 8, y + height / 2);
-  // ctx.rect(x, y, 50, bubbleHeight);
-  // ctx.fillStyle = '#f00';
-  // ctx.fill();
 
   ctx.restore();
 };

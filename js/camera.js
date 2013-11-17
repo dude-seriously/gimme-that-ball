@@ -6,7 +6,7 @@ var cameraMoveSpeed = 15;
 
 var cameraZoomMin = .3;
 var cameraZoomMax = 2;
-var shakeStr = 100;
+var shakeStr = 150;
 
 function Camera() {
   this.target = Vec2.new(0, 0);
@@ -74,20 +74,6 @@ Camera.prototype.update = function() {
 }
 
 Camera.prototype.render = function() {
-
-  // if (game.state == 'game' && gamePadMaster && gamePadMaster.leftShoulder1) {
-  //   if (Math.abs(gamePadMaster.leftStickX) > .2) {
-  //     this.target[0] += gamePadMaster.leftStickX * cameraMoveSpeed;
-  //   }
-  //   if (Math.abs(gamePadMaster.leftStickY) > .2) {
-  //     this.target[1] += gamePadMaster.leftStickY * cameraMoveSpeed;
-  //   }
-
-  //   if (Math.abs(gamePadMaster.rightStickY) > .2) {
-  //     this.targetZoom = Math.max(cameraZoomMin, Math.min(cameraZoomMax, this.targetZoom - gamePadMaster.rightStickY * cameraZoomSpeed));
-  //   }
-  // }
-
   this.pos[0] += (this.target[0] - this.pos[0]) * cameraEasingF;
   this.pos[1] += (this.target[1] - this.pos[1]) * cameraEasingF;
   this.zoom   += (this.targetZoom - this.zoom)  * cameraEasingF;
