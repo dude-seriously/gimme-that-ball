@@ -28,7 +28,8 @@ SpeechBubbleQuotes = {
     "Noooooooobs",
     "Hehe, so easy",
     "This is what WINNING looks like",
-    "U MAD BRO?"
+    "U MAD BRO?",
+    "Can't touch this"
   ],
 
   "random sad": [

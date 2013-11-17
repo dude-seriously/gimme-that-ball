@@ -22,8 +22,18 @@ Game.prototype.init = function() {
 
   var i = 20;
   while(i--) {
-    if (i == 17) {
-      world.addProp(propTypes['boomerang']);
+    if (i == 19) {
+      var type = propTypes['boomerang'];
+      type.x =  Math.random() * world.width + world.left;
+      type.y = Math.random() * (world.height-100) + world.top;
+      world.addProp(type);
+    }else if (i == 18) {
+      var type = propTypes['spinner'];
+      type.x =  Math.random() * world.width + world.left;
+      type.y = Math.random() * (world.height-100) + world.top;
+      world.addProp(type);
+    } else if (i == 17) {
+      world.addProp(propTypes['big seesaw']);
     } else if (i%3 == 0) {
       var type = propTypes['platform'];
       type.x =  Math.random() * world.width + world.left;
@@ -34,9 +44,19 @@ Game.prototype.init = function() {
       type.x =  Math.random() * world.width + world.left;
       type.y = -100 + Math.random() * (world.height-100) + world.top;
       world.addProp(type);
+    } else if (i%11 == 0) {
+      var size = Math.random() * 200 + 200
+      world.addProp({
+        width: size,
+        height: size,
+        fixed: true,
+        color: "#111111",
+        x: Math.random() * world.width + world.left,
+        y: world.height + world.top - size/2
+      });
     } else {
 
-      var size = Math.random() * 50 + 50
+      var size = Math.random() * 50 + 80
       world.addProp({
         width: size,
         height: size,
