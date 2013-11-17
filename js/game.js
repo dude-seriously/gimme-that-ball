@@ -134,7 +134,7 @@ function changeGravity() {
       SetGravity(15, Math.random() * 15 - 7, 15);
       msg = "Getting windy..."
     break;
-  }1
+  }
   $("#message").text(msg).fadeIn(1000).fadeOut(2000);
   setTimeout(normalGravity, 10000);
 }
@@ -149,7 +149,7 @@ function normalGravity() {
   $("#message").text("Back to normal!").fadeIn(1000).fadeOut(2000);
   world.gravity_shift = 1;
   SetGravity(15, 0, 15);
-  setTimeout(changeGravity, 3000);
+  setTimeout(changeGravity, 10000);
 }
 
-setTimeout(changeGravity, 3000);
+setTimeout(changeGravity, 10000);

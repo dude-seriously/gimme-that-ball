@@ -97,6 +97,8 @@ Ball.prototype.drop = function(vel) {
 
   this.disabled = false;
   this.player = null;
+
+  camera.shaking = Math.floor(Math.random() * 5 + 5);
 }
 
 var ball = new Ball();
