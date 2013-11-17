@@ -12,14 +12,6 @@ Game.prototype.init = function() {
   teams.init();
   this.loop();
 
-  // var i = 10;
-  // while(i--) {
-  //   var player = new Player();
-  //   player.x = Math.random() * 500 - 250;
-  //   player.y = Math.random() * 500 - 250;
-  //   players.push(player);
-  // }
-
   var i = 20;
   while(i--) {
     if (i == 19) {
@@ -35,7 +27,7 @@ Game.prototype.init = function() {
     } else if (i == 17) {
       world.addProp(propTypes['big seesaw']);
     } else if (i%3 == 0) {
-      var type = propTypes['platform'];
+      var type = propTypes['hovering platform'];
       type.x =  Math.random() * world.width + world.left;
       type.y = Math.random() * (world.height-100) + world.top;
       world.addProp(type);
@@ -45,7 +37,7 @@ Game.prototype.init = function() {
       type.y = -100 + Math.random() * (world.height-100) + world.top;
       world.addProp(type);
     } else if (i%11 == 0) {
-      var size = Math.random() * 200 + 200
+      var size = Math.random() * 200 + 100
       world.addProp({
         width: size,
         height: size,
@@ -55,8 +47,7 @@ Game.prototype.init = function() {
         y: world.height + world.top - size/2
       });
     } else {
-
-      var size = Math.random() * 50 + 80
+      var size = Math.random() * 50 + 70
       world.addProp({
         width: size,
         height: size,
@@ -118,7 +109,7 @@ game.init();
 
 function changeGravity() {
   var msg;
-  switch (Math.ceil(Math.random()*3)) {
+  switch (Math.ceil(Math.random()*4)) {
     case 1:
       world.gravity_shift = -1;
       SetGravity(15, Math.random() * 2 - 1, -15);
@@ -132,11 +123,16 @@ function changeGravity() {
     case 3:
       world.gravity_shift = 1;
       SetGravity(15, Math.random() * 15 - 7, 15);
-      msg = "Getting windy..."
+      msg = "It's unfair!"
+    break;
+    case 4:
+      world.gravity_shift = 1;
+      SetGravity(50, 0, 50);
+      msg = "Super magnet"
     break;
   }
   $("#message").text(msg).fadeIn(1000).fadeOut(2000);
-  setTimeout(normalGravity, 2000);
+  setTimeout(normalGravity, 5000);
 }
 
 function SetGravity(str, x, y) {
@@ -149,7 +145,7 @@ function normalGravity() {
   $("#message").text("Back to normal!").fadeIn(1000).fadeOut(2000);
   world.gravity_shift = 1;
   SetGravity(15, 0, 15);
-  setTimeout(changeGravity, 2000);
+  setTimeout(changeGravity, 5000);
 }
 
-setTimeout(changeGravity, 2000);
+setTimeout(changeGravity, 5000);

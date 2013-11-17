@@ -68,6 +68,18 @@ var propTypes = {
     fixed: true,
     image: '',
     color: "#b97a57"
+  },
+  'hovering platform': {
+  	x: 150,
+  	y: 50,
+    width: 200,
+    height: 20,
+    fixed: true,
+    image: '',
+    color: "#b97a57",
+    upd: function() {
+    	this.phys.SetPosition(new b2Vec2(this.original_x, this.original_y + Math.cos(this.step/20) * 0.2));
+    }
   }
 };
 
