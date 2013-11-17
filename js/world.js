@@ -6,6 +6,7 @@ function World() {
   this.right = 1024;
   this.top = -512;
   this.bottom = 256;
+  this.gravityStr = 15;
 
   this.width = this.right - this.left;
   this.height = this.bottom - this.top;
@@ -14,8 +15,10 @@ function World() {
 
   // box2d
   this.gravity = new b2Vec2(0, 15);
+  this.gravityR = this.gravity.Copy();
   this.phys = new b2World(this.gravity, false);
 
+  this.angle = Math.atan2(this.gravity.y, this.gravity.x) - Math.PI / 2
   this.gravity_shift = 1;
 
 
@@ -99,6 +102,17 @@ World.prototype.updatePhys = function() {
 }
 
 World.prototype.update = function() {
+  // this.gravityR.x = 0;
+  // this.gravityR.y = 15;
+
+  this.gravityR.x += this.gravity.x * .1;
+  this.gravityR.y += this.gravity.y * .1;
+  this.gravityR.Normalize();
+  this.gravityR.Multiply(this.gravityStr);
+
+  this.phys.SetGravity(this.gravityR);
+  this.angle = Math.atan2(this.gravityR.y, this.gravityR.x) - Math.PI / 2;
+
   this.props.forEach(function(prop) {
     prop.update();
   });

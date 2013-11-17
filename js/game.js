@@ -117,19 +117,39 @@ var game = new Game();
 game.init();
 
 function changeGravity() {
-  $("#message").text("Gravity Shift!").fadeIn(1000).fadeOut(2000);
-  world.gravity_shift = -1;
-  world.gravity = new b2Vec2(0, -15);
-  world.phys.SetGravity(new b2Vec2(0, -15))
+  var msg;
+  switch (Math.ceil(Math.random()*3)) {
+    case 1:
+      world.gravity_shift = -1;
+      SetGravity(15, Math.random() * 2 - 1, -15);
+      msg = "Gravity flip!"
+    break;
+    case 2:
+      world.gravity_shift = 1;
+      SetGravity(5, 0, 15);
+      msg = "Moon gravity"
+    break;
+    case 3:
+      world.gravity_shift = 1;
+      SetGravity(15, Math.random() * 15 - 7, 15);
+      msg = "Getting windy..."
+    break;
+  }1
+  $("#message").text(msg).fadeIn(1000).fadeOut(2000);
   setTimeout(normalGravity, 10000);
+}
+
+function SetGravity(str, x, y) {
+  world.gravityStr = str;
+  world.gravity.x = x;
+  world.gravity.y = y;
 }
 
 function normalGravity() {
   $("#message").text("Back to normal!").fadeIn(1000).fadeOut(2000);
   world.gravity_shift = 1;
-  world.gravity = new b2Vec2(0, 15);
-  world.phys.SetGravity(new b2Vec2(0, 15))
-  setTimeout(changeGravity, 10000);
+  SetGravity(15, 0, 15);
+  setTimeout(changeGravity, 3000);
 }
 
-setTimeout(changeGravity, 10000);
+setTimeout(changeGravity, 3000);

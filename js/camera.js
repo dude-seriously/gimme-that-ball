@@ -11,6 +11,7 @@ function Camera() {
   this.target = Vec2.new(0, 0);
   this.pos = Vec2.new(0, 0);
   this.zoom = 1;
+  this.angle = 0;
   this.targetZoom = 1;
 }
 
@@ -59,6 +60,8 @@ Camera.prototype.update = function() {
 
   dist = Math.max(100, Math.min(1000, dist));
   this.targetZoom = Math.max(cameraZoomMin, Math.min(cameraZoomMax, 1.1 - (dist / 1000 - .5)));
+
+  this.angle = -world.angle + (world.gravityR.y < 0 ? Math.PI : 0);
 }
 
 Camera.prototype.render = function() {
@@ -85,5 +88,6 @@ Camera.prototype.render = function() {
 
   ctx.translate(canvas.width / 2, canvas.height / 2);
   ctx.scale(this.zoom, this.zoom);
+  ctx.rotate(this.angle);
   ctx.translate(-this.pos[0], -this.pos[1] / 2);
 }
