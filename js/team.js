@@ -12,6 +12,7 @@ Team.prototype.join = function(player) {
 
   var pos = player.phys.GetPosition();
   pos.x = this.id == 0 ? (world.left + 128) * pf : (world.right - 128) * pf;
+  pos.y = (world.bottom - 256) * pf;
   player.phys.SetPosition(pos);
 }
 

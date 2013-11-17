@@ -92,9 +92,10 @@ Bubble.prototype.update = function() {
 Bubble.prototype.render = function() {
   ctx.save();
 
-  // ctx.translate(camera.pos[0], camera.pos[1] / 2);
-  // ctx.rotate(-camera.angle);
-  // ctx.translate(-camera.pos[0], -camera.pos[1] / 2);
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.scale(camera.zoom, camera.zoom);
+  ctx.translate(-camera.pos[0], -camera.pos[1] / 2);
 
   ctx.beginPath();
 

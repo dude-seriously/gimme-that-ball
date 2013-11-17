@@ -4,7 +4,7 @@ var cameraEasingF = .15;
 var cameraZoomSpeed = .05;
 var cameraMoveSpeed = 15;
 
-var cameraZoomMin = .3;
+var cameraZoomMin = .8;
 var cameraZoomMax = 2;
 var shakeStr = 150;
 

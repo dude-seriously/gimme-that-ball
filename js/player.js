@@ -133,7 +133,7 @@ Player.prototype.update = function() {
             }
           }
         }
-        if (! this.ready && (this.gamePad.start || this.gamePad.faceButtom0) && this.team) {
+        if (! this.ready && (this.gamePad.start || this.gamePad.faceButton0) && this.team) {
           this.ready = true;
           this.div.addClass('ready');
           players.checkReady();
@@ -253,6 +253,25 @@ Player.prototype.render = function() {
     this.x = pos.x / pf;
     this.y = pos.y / pf;
 
+
+    // var vec = new b2Vec2((this.x - camera.pos[0]) * camera.zoom, (this.y - camera.pos[1]) * camera.zoom);
+    // var d = vec.Length();
+    // var a = Math.atan2(vec.y, vec.x);
+    // a += camera.angle;
+    // vec.Normalize();
+    // vec.Multiply(d);
+
+    // vec.x += canvas.width  / 2;
+    // vec.y += canvas.height / 2;
+
+    // ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // ctx.rect(vec.x, vec.y, 10, 10);
+    // ctx.fillStyle = '#f00';
+    // ctx.fill();
+
+    // ctx.restore();
+
+    // ctx.save();
     ctx.translate(pos.x / pf, pos.y / pf);
 
     var energyLeft = this.energy / maxEnergy * playerWidth;
