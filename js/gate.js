@@ -3,6 +3,8 @@ var gateHeight = 256;
 
 var gateFromBottom = 256;
 
+var pointFlip = 1;
+
 function Gate(team) {
   this.team = team;
   this.x = this.team.id == 0 ? world.left : world.right - gateWidth;
@@ -12,7 +14,7 @@ function Gate(team) {
 Gate.prototype.update = function() {
   if (ball.x > this.x && ball.x < this.x + gateWidth && ball.y > this.y && ball.y < this.y + gateHeight) {
 
-    this.team.score += (ball.player && ball.player.team == this.team) ? 3 : 1;
+    this.team.score += (ball.player && ball.player.team == this.team) ? 3 * pointFlip : 1 * pointFlip;
 
     ball.phys.SetPosition(new b2Vec2(0, 0));
     ball.phys.SetLinearVelocity(new b2Vec2(0, -10));
