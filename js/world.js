@@ -13,8 +13,8 @@ function World() {
   this.props = new Collection();
 
   // box2d
-  var gravity = new b2Vec2(0, 15);
-  this.phys = new b2World(gravity, false);
+  this.gravity = new b2Vec2(0, 15);
+  this.phys = new b2World(this.gravity, false);
 
   this.gravity_shift = 1;
 

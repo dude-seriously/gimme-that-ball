@@ -119,6 +119,7 @@ game.init();
 function changeGravity() {
   $("#message").text("Gravity Shift!").fadeIn(1000).fadeOut(2000);
   world.gravity_shift = -1;
+  world.gravity = new b2Vec2(0, -15);
   world.phys.SetGravity(new b2Vec2(0, -15))
   setTimeout(normalGravity, 10000);
 }
@@ -126,6 +127,7 @@ function changeGravity() {
 function normalGravity() {
   $("#message").text("Back to normal!").fadeIn(1000).fadeOut(2000);
   world.gravity_shift = 1;
+  world.gravity = new b2Vec2(0, 15);
   world.phys.SetGravity(new b2Vec2(0, 15))
   setTimeout(changeGravity, 10000);
 }

@@ -212,7 +212,7 @@ Player.prototype.update = function() {
     }
   }
 
-  !this.gamePad.faceButton1 && this.phys.SetAngle(0);
+  ! this.gamePad.faceButton1 && this.phys.SetAngle(Math.atan2(world.gravity.y, world.gravity.x) - Math.PI / 2);
 }
 
 Player.prototype.makeASpeech = function(type, force) {
