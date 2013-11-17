@@ -48,3 +48,81 @@ SpeechBubbleQuotes = {
     "Are we there yet?"
   ]
 }
+
+function Bubbles() {
+  Collection.call(this, 'id');
+}
+Bubbles.prototype = Object.create(Collection.prototype);
+
+Bubbles.prototype.update = function() {
+  this.forEach(function(bubble) {
+    if (bubble) bubble.update();
+  });
+}
+
+Bubbles.prototype.render = function() {
+  this.forEach(function(bubble) {
+    bubble.render();
+  });
+}
+
+var bubbles = new Bubbles();
+
+
+var bubbleStays = 3000;
+var bubbleIDs = 0;
+
+function Bubble(player, text) {
+  this.id = ++bubbleIDs;
+  this.player = player;
+  this.text = text;
+  this.created = now;
+  this.expire = now + bubbleStays;
+
+  bubbles.push(this);
+}
+
+Bubble.prototype.update = function() {
+  if (this.expire < now) {
+    bubbles.remove(this);
+  }
+};
+
+Bubble.prototype.render = function() {
+  ctx.save();
+
+  ctx.beginPath();
+
+  ctx.font = 'bold 24px Arial';
+  var width = ctx.measureText(this.text).width;
+  var height = 32;
+
+  var x = this.player.x - playerWidth / 2;
+  var y = this.player.y - playerHeight / 2 - height - 32;
+
+  ctx.lineWidth = 2;
+
+  ctx.moveTo(x, y);
+  ctx.lineTo(x + width + 16, y);
+  ctx.lineTo(x + width + 16, y + height);
+  ctx.lineTo(x + 32, y + height);
+  ctx.lineTo(x + 16, y + height + 16);
+  ctx.lineTo(x + 16, y + height);
+  ctx.lineTo(x, y + height);
+  ctx.lineTo(x, y);
+
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+
+  ctx.strokeStyle = '#000';
+  ctx.stroke();
+
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#000';
+  ctx.fillText(this.text, x + 8, y + height / 2);
+  // ctx.rect(x, y, 50, bubbleHeight);
+  // ctx.fillStyle = '#f00';
+  // ctx.fill();
+
+  ctx.restore();
+};

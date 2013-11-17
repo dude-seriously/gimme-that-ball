@@ -77,6 +77,8 @@ Ball.prototype.grab = function(player) {
 
   this.player = player;
   this.disabled = true;
+
+  this.player.makeASpeech('got ball', true);
 }
 
 Ball.prototype.drop = function(vel) {

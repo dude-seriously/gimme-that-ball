@@ -19,6 +19,11 @@ Gate.prototype.update = function() {
     ball.player = null;
     ball.disabled = false;
     this.team.tpl();
+
+    var loosers = this.team == teams.a() ? teams.b() : teams.a();
+    players.forEach(function(player) {
+      player.makeASpeech(player.team == loosers ? 'random sad' : 'random happy', true);
+    });
   }
 }
 

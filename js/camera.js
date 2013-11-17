@@ -52,10 +52,12 @@ Camera.prototype.update = function() {
 
   this.target[1] -= 64;
 
-  var xDist = xMax - xMin;
-  var yDist = (yMax - yMin) * 1.2;
+  var xDist = (xMax - xMin);
+  var yDist = (yMax - yMin);
 
-  var dist = Math.max(100, Math.min(1000, xDist > yDist ? xDist : yDist));
+  var dist = Math.sqrt(xDist * xDist, yDist * yDist);
+
+  dist = Math.max(100, Math.min(1000, dist));
   this.targetZoom = Math.max(cameraZoomMin, Math.min(cameraZoomMax, 1.1 - (dist / 1000 - .5)));
 }
 

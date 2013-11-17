@@ -4,6 +4,7 @@ var jumpFactor = 7;
 var dashFactor = 5;
 var cantGrabThrowDelay = 500;
 var cantGrabKickDelay = 1000;
+var randomSpeechDelay = 500;
 
 var playerImage = new Image();
 var playerImageJump = new Image();
@@ -63,6 +64,10 @@ function Player(ind) {
   this.phys.CreateFixture(fixDef);
 
   this.phys.link = this;
+
+  this.speeched = false;
+  this.nextSpeech = 0;
+  this.lastRandomSpeech = 0;
   // console.log(this.phys.setContactListener)
 }
 
@@ -84,6 +89,7 @@ Player.prototype.collide = function(contact) {
 
           if (hit > 4) {
             var vel = damager.phys.GetLinearVelocity().Copy();
+            ball.player.makeASpeech('hit');
             ball.drop(vel);
           }
         }
@@ -191,6 +197,17 @@ Player.prototype.update = function() {
           }
         }
 
+        // SPEECH BUBBLE
+        if (this.gamePad.faceButton3) {
+          this.makeASpeech('random');
+        } else {
+          this.speeched = false;
+        }
+
+        if (this.nextRandomSpeech < now) {
+          this.makeASpeech();
+        }
+
       break;
     }
   }
@@ -198,8 +215,26 @@ Player.prototype.update = function() {
   !this.gamePad.faceButton1 && this.phys.SetAngle(0);
 }
 
-Player.prototype.jump = function() {
+Player.prototype.makeASpeech = function(type, force) {
+  if ((! this.speeched && this.nextSpeech < now) || force) {
+    this.nextRandomSpeech = Math.floor(now + 5000 + Math.random() * 5000);
+    this.nextSpeech = now + Math.floor(Math.random() * randomSpeechDelay + randomSpeechDelay * .5);
+    this.speeched = true;
 
+    if (! type) {
+      type = ((this.team == teams.a() && this.team.score > teams.b().score) || (this.team == teams.b() && this.team.score > teams.b().score)) ? 'random happy' : 'random sad';
+    }
+    var ind = Math.floor(Math.random() * SpeechBubbleQuotes[type].length);
+
+    var self = this;
+    bubbles.forEach(function(bubble) {
+      if (bubble.player == self) {
+        bubble.expire = 0;
+      }
+    });
+
+    new Bubble(this, SpeechBubbleQuotes[type][ind]);
+  }
 }
 
 Player.prototype.render = function() {

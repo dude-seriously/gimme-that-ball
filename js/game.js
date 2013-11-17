@@ -77,6 +77,7 @@ Game.prototype.loop = function() {
   world.update();
   ball.update();
   players.update();
+  bubbles.update();
   teams.update();
 
   world.updatePhys();
@@ -88,6 +89,7 @@ Game.prototype.loop = function() {
   world.render();
   players.render();
   ball.render();
+  bubbles.render();
   teams.render();
 }
 
